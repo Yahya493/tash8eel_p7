@@ -1,5 +1,5 @@
 
-initState = {
+const initState = {
 
 }
 
