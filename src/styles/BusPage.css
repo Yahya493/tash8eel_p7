@@ -1,0 +1,46 @@
+
+#header {
+    width: auto;
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    background-color: var(--primary_color);
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 10px;
+}
+
+#search{
+    padding: 10px;
+    margin-inline: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#header button{
+    padding:10px;
+    border-radius: 10px;
+    background-color: var(--secondery_color);
+    color: var(--secondery_font_color);
+    font-weight: bold;
+}
+
+#body {
+    width: auto;
+    height: fit-content;
+    padding: 10px;
+    /* background-color: var(--third_color); */
+}
+
+.busCard {
+    background-color:var(--third_color);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.busCard h5{
+    color: var(--primary_color);
+    font-size: 20px;
+    margin-block: 0px;
+}

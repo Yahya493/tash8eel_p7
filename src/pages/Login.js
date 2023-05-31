@@ -1,50 +1,35 @@
 import React, { useState } from 'react';
 import '../styles/login.css'; // Import the CSS file
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // try {
-    //   const response = await fetch('/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ username, password }),
-    //   });
-
-    //   if (response.ok) {
-    //     console.log('Login successful');
-    //     // Perform actions after successful login
-    //   } else if (response.status === 401) {
-    //     console.log('Invalid username or password');
-    //     // Perform actions for invalid credentials
-    //   } else {
-    //     console.log('An error occurred');
-    //     // Perform actions for other error cases
-    //   }
-    // } catch (error) {
-    //   console.error('An error occurred:', error);
-    //   // Perform actions for error cases
-    // }
     Login();
-
-    setUsername('');
-    setPassword('');
+    // setUsername('');
+    // setPassword('');
   };
 
   const Login = () => {
     fetch("http://localhost:4000/api/users?name=" + username)
-    .then(res => res.json())
-    .then(user => {
-      if(user.name === username && user.password === password) {
-      alert("logedIn")}
-      else (alert("failed login"))
-    })
+      .then(res => res.json())
+      .then(user => {
+        if (user.name === username && user.password === password) {
+          dispatch({
+            type: 'setUser',
+            user: user
+          })
+          navigate('/buses')
+        }
+        else (alert("failed login"))
+      })
   }
 
   return (
