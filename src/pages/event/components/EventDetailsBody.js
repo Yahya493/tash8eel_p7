@@ -83,7 +83,7 @@ export default function EventDetailsBody({ event }) {
                         <label htmlFor='duration'>Duration</label>
                     </td>
                     <td>
-                        <input id='duration' type='text' value={event.duration} />
+                        <input id='duration' type='number' value={event.duration} />
                     </td>
                 </tr>
                 <tr>

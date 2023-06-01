@@ -11,12 +11,14 @@
     flex-direction: row;
 }
 
-.eventCard a #photo {
+.eventCard a .photo {
     flex: 1;
+    max-width: 350px;
+    height: auto;
 }
 
 .eventCard a #details {
-    flex: 2;
+    flex: 4;
 }
 
 .eventCard a {

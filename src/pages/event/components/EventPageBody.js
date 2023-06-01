@@ -6,7 +6,7 @@ export default function BusPageBody({ events }) {
     <div id='body'>
       {events.map(event => <div className='eventCard' key={event._id}>
         <Link to={`/events/${event._id}`} >
-          <img src={event.photos[0]} id='photo' />
+          <img src={event.photos[0]} className='photo' />
           <div id='details'>
             <h5>{event.name}</h5>
             Valid From: {event.validFrom}<br />
