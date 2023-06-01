@@ -1,0 +1,12 @@
+#eventDetailsBody {
+    padding-inline: 10px;
+}
+
+#eventDetailsBody label {
+    font-weight: bold;
+}
+
+#eventDetailsBody td {
+    padding-block: 5px;
+}
+

@@ -7,6 +7,7 @@ import BusPage from './pages/BusPage';
 import { useSelector } from 'react-redux';
 import BusDetails from './pages/BusDetails';
 import EventPage from './pages/event/EventPage';
+import EventDetails from './pages/event/EventDetails';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/' element={<EventPage />} />
           <Route path='/buses' element={<BusPage />} />
           <Route path='/buses/:id' element={<BusDetails />} />
+          <Route path='/events/:id' element={<EventDetails />} />
 
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
