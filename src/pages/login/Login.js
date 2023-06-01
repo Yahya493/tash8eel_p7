@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/login.css'; // Import the CSS file
+import './login.css'; // Import the CSS file
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,10 @@ function LoginForm() {
             type: 'setUser',
             user: user
           })
-          navigate('/buses')
+          dispatch({
+            type: 'setLogIn',
+            logedIn: true
+          })
         }
         else (alert("failed login"))
       })

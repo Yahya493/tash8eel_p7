@@ -1,0 +1,30 @@
+
+
+.eventCard {
+    background-color:var(--third_color);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.eventCard a{
+    display: flex;
+    flex-direction: row;
+}
+
+.eventCard a #photo {
+    flex: 1;
+}
+
+.eventCard a #details {
+    flex: 2;
+}
+
+.eventCard a {
+    text-decoration: none;
+    color: black;
+}
+.eventCard h5{
+    color: var(--secondery_color);
+    font-size: 20px;
+    margin-block: 0px;
+}

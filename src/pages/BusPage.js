@@ -15,7 +15,6 @@ export default function BusPage() {
     fetch(api + "/buses?user=" + user)
     .then(res => res.json())
     .then(buses => {
-      console.log(buses)
       dispatch({type: 'setBuses', buses: buses})
     })
   },[])

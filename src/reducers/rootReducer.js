@@ -1,7 +1,9 @@
 
 const initState = {
     api: 'http://localhost:4000/api',
-    buses: []
+    logedIn: false,
+    buses: [],
+    events: [],
 }
 
 const rootReducer = (state = initState, action) => {
@@ -9,8 +11,14 @@ const rootReducer = (state = initState, action) => {
         case 'setUser':
             state = {...state, user: action.user}
             break
+        case 'setLogIn':
+            state = {...state, logedIn: action.logedIn}
+            break
         case 'setBuses':
             state = {...state, buses: action.buses}
+            break
+        case 'setEvents':
+            state = {...state, events: action.events}
             break
     }
 
