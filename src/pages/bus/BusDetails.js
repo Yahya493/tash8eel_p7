@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import BusDetailsHeader from '../components/BusDetailsHeader'
-import BusDetailsBody from '../components/BusDetailsBody'
-import '../styles/BusDetails.css'
+import BusDetailsHeader from './components/BusDetailsHeader'
+import BusDetailsBody from './components/BusDetailsBody'
+import './BusDetails.css'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 

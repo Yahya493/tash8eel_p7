@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 
-export default function BusDetailsBody({bus, driver}) {
+export default function BusDetailsBody({ bus, driver }) {
+
+    const drivers = useSelector(state => state.drivers)
 
     return (
         <div id='busDetailsBody'>
-            <form >
-                <table>
+            <table>
+                <tbody>
                     <tr>
                         <td>
                             <label htmlFor='busName'>Name</label>
@@ -20,7 +23,10 @@ export default function BusDetailsBody({bus, driver}) {
                             <label htmlFor='driverName'>Driver</label>
                         </td>
                         <td>
-                            <input id='driverName' type='text' value={driver.name} />
+                            <select id='driverName'>
+                                {drivers.map(userDriver => <option key={userDriver._id} value={userDriver._id} selected={userDriver._id==driver._id}>{userDriver.name}</option>)}
+                            </select>
+                            {/* <input id='driverName' type='text' value={driver.name} /> */}
                         </td>
                     </tr>
                     <tr>
@@ -47,8 +53,8 @@ export default function BusDetailsBody({bus, driver}) {
                             <input id='description' type='text' value={bus.description} />
                         </td>
                     </tr>
-                </table>
-            </form>
+                </tbody>
+            </table>
         </div>
     )
 }
