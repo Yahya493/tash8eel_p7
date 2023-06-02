@@ -40,6 +40,7 @@ function App() {
     fetch(api + "/drivers?user=" + user._id)
       .then(res => res.json())
       .then(drivers => {
+        drivers = [{_id:'', name:'__Select__', phone: '', user: ''}, ...drivers]
         dispatch({ type: 'setDrivers', drivers: drivers })
       })
   }

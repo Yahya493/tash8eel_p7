@@ -34,7 +34,7 @@ button{
     margin-inline: 5px;
 }
 
-button[class='btnDelete']{
+button[class='btnDelete'], button[class='btnCancel']{
     background-color: red;
 }
 
