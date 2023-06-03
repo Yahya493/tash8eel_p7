@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch()
 
   const handleToggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -20,8 +22,9 @@ const Navbar = () => {
     console.log(searchTerm);
   };
 
-  const handleDeleteSearch = () => {
-    setSearchTerm('');
+  const handleLogOut = () => {
+    dispatch({type:'setUser', user: {}})
+    dispatch({type: 'setLogIn', logedIn: false})
   };
 
   return (
@@ -44,8 +47,8 @@ const Navbar = () => {
         
      
 
-          <button type="button" className='button1' onClick={handleDeleteSearch}>
-            Logout
+          <button type="button" className='logOut' onClick={handleLogOut}>
+            Log out
           </button>
 
         </div>

@@ -5,6 +5,7 @@ const initState = {
     buses: [],
     events: [],
     drivres: [],
+    update: 0,
 }
 
 const rootReducer = (state = initState, action) => {
@@ -23,6 +24,9 @@ const rootReducer = (state = initState, action) => {
             break
         case 'setEvents':
             state = { ...state, events: action.events }
+            break
+        case 'update':
+            state = { ...state, update: state.update + 1 }
             break
         default:
             break

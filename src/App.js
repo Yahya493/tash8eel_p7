@@ -17,6 +17,7 @@ function App() {
   const logedIn = useSelector(state => state.logedIn)
   const api = useSelector(state => state.api)
   const user = useSelector(state => state.user)
+  const update = useSelector(state => state.update)
   const dispatch = useDispatch()
 
 
@@ -40,18 +41,26 @@ function App() {
     fetch(api + "/drivers?user=" + user._id)
       .then(res => res.json())
       .then(drivers => {
-        drivers = [{_id:'', name:'__Select__', phone: '', user: ''}, ...drivers]
+        drivers = [{ _id: '', name: '__Select__', phone: '', user: '' }, ...drivers]
         dispatch({ type: 'setDrivers', drivers: drivers })
       })
   }
 
-  useEffect(() => {
+  const init = () => {
     if (logedIn) {
       getEvents()
       getBuses()
       getDrivers()
     }
+  }
+
+  useEffect(() => {
+    init()
   }, [logedIn])
+
+  useEffect(() => {
+    init()
+  }, [update])
 
   if (!logedIn) {
     return (
