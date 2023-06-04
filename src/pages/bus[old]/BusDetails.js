@@ -47,7 +47,6 @@ export default function BusDetails() {
                 })
                 .then(res => res.json())
                 .then(deletedDriver => {
-                    dispatch({type:'setDrivers', drivers: drivers.filter(driver => driver._id !== deletedDriver.data._id)})
                     console.log(`${deletedDriver.data.name}: ${deletedDriver.status}`)
                 })
             }
@@ -59,16 +58,14 @@ export default function BusDetails() {
             })
             .then(res => res.json())
             .then(deletedBus => {
-                dispatch({type:'setBuses', buses: buses.filter(buses => buses._id !== deletedBus.data._id)})
                 console.log(`${deletedBus.data.name}: ${deletedBus.status}`)
-                // dispatch({type:'update'})
+                dispatch({type:'update'})
                 navigate(-1)
             })
         })
     }
     
     const handleUpdate = () => {
-        const api = getBaseUrl()
         if(bus.name === '' || bus.driver === '') {
             console.log("Bus name and driver shoudn't be empty!")
             return
@@ -83,9 +80,8 @@ export default function BusDetails() {
         })
         .then(res => res.json())
         .then(updatedBus => {
-            dispatch({type:'setBuses', buses: [updatedBus, ...buses.filter(buses => buses._id !== updatedBus._id)]})
             console.log(`Bus: ${updatedBus.name} has been updated`)
-            // dispatch({type:'update'})
+            dispatch({type:'update'})
             navigate(-1)
         })
     }

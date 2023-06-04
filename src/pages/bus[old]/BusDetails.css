@@ -1,0 +1,12 @@
+#busDetailsBody {
+    padding-inline: 10px;
+}
+
+#busDetailsBody label {
+    font-weight: bold;
+}
+
+#busDetailsBody td {
+    padding-block: 5px;
+}
+

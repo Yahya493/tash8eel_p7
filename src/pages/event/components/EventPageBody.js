@@ -43,6 +43,7 @@ export default function EventPageBody({ events }) {
     },
     {
       field: 'duration',
+      valueFormatter: p => p.value + ' min'
     },
     {
       field: 'numberOfPerson',
@@ -51,11 +52,23 @@ export default function EventPageBody({ events }) {
       field: 'fees',
     },
     {
+      field: 'buses',
+      valueFormatter: p => p.value.length,
+      // tooltipField: 'buses',
+      tooltipValueGetter: p => p.value
+    },
+    {
+      field: 'photos',
+      valueFormatter: p => p.value.length,
+      // tooltipValueGetter: p => p.value
+    },
+    {
       field: 'publishDate',
       valueFormatter: dateFormatter,
     },
     {
       field: 'description',
+      tooltipValueGetter: p => p.value
     },
   ]
 

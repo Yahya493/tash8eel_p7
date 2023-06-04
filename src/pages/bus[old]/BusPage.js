@@ -7,7 +7,6 @@ import { useState } from 'react'
 import BusCreateForm from './components/BusCreateForm'
 import { getBuses, getDrivers } from '../../actions/actions'
 import Cookies from 'js-cookie'
-import { getBaseUrl } from '../../actions/urlService'
 
 export default function BusPage() {
 
@@ -15,9 +14,10 @@ export default function BusPage() {
   const buses = useSelector(state => state.buses)
   const drivers = useSelector(state => state.drivers)
   const [isAdding, setIsAdding] = useState(false)
+  const api = useSelector(state => state.api)
   const dispatch = useDispatch()
-  const [newBus, setNewBus] = useState({ name: '', driver: '', seats: 30, description: '', user: user })
-  const [newDriver, setNewDriver] = useState({ name: '', phone: '', user: user })
+  const [newBus, setNewBus] = useState({ name: '', driver: '', seats: 30, description: '', user: user._id })
+  const [newDriver, setNewDriver] = useState({ name: '', phone: '', user: user._id })
 
   useEffect(() => {
     if(buses.length === 0) {
@@ -66,7 +66,6 @@ export default function BusPage() {
 
   const handleSave = async () => {
     if (checkForm()) {
-      const api = getBaseUrl()
       try {
         fetch(api + '/insertDriver', {
           method: 'POST',
@@ -77,8 +76,6 @@ export default function BusPage() {
         })
           .then(res => res.json())
           .then(driverRes => {
-            // setNewDriver(driverRes)
-            dispatch({ type: 'setDrivers', drivers: [driverRes, ...drivers]})
             try {
               fetch(api + '/insertBus', {
                 method: 'POST',
@@ -90,7 +87,7 @@ export default function BusPage() {
                 .then(res => res.json())
                 .then(busRes => {
                   console.log(busRes)
-                  dispatch({ type: 'setBuses', buses: [busRes, ...buses]})
+                  dispatch({ type: 'update' })
                   setIsAdding(false)
                 })
             }
