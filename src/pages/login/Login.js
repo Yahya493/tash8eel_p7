@@ -31,7 +31,7 @@ function LoginForm() {
             logedIn: true
           })
           navigate('/')
-          dispatch({type: 'update'})
+          // dispatch({type: 'update'})
         }
         else (alert("failed login"))
       })

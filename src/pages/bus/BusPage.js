@@ -5,10 +5,11 @@ import './BusPage.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import BusCreateForm from './components/BusCreateForm'
+import { getBuses, getDrivers } from '../../actions/actions'
 
 export default function BusPage() {
 
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user._id)
   const buses = useSelector(state => state.buses)
   const drivers = useSelector(state => state.drivers)
   const [isAdding, setIsAdding] = useState(false)
@@ -17,6 +18,12 @@ export default function BusPage() {
   const [newBus, setNewBus] = useState({ name: '', driver: '', seats: 30, description: '', user: user._id })
   const [newDriver, setNewDriver] = useState({ name: '', phone: '', user: user._id })
 
+  useEffect(() => {
+    if(buses.length === 0) {
+      getBuses(dispatch, user)
+    }
+    getDrivers(dispatch, user)
+  }, [])
 
   const handleSearch = () => {
 

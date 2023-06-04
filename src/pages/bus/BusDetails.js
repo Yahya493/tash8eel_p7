@@ -4,8 +4,11 @@ import BusDetailsBody from './components/BusDetailsBody'
 import './BusDetails.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { getBaseUrl } from '../../actions/urlService'
+import { getDrivers } from '../../actions/actions'
 
 export default function BusDetails() {
+    const user = useSelector(state => state.user._id)
     const [bus, setBus] = useState({})
     const [driver, setDriver] = useState({})
     const drivers = useSelector(state => state.drivers)
@@ -16,6 +19,7 @@ export default function BusDetails() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        const api = getBaseUrl()
         fetch(api + "/buses/" + id)
             .then(res => res.json())
             .then(bus => {
@@ -30,6 +34,7 @@ export default function BusDetails() {
 
     const handleDelete = () => {
         const busInit = buses.find(item => item._id === bus._id)
+        const api = getBaseUrl()
         fetch(api + `/busesByDriver?user=${busInit.user}&driver=${busInit.driver}`)
         .then(res => res.json())
         .then(busArray => {

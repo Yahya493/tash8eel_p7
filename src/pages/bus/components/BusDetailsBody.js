@@ -40,8 +40,8 @@ export default function BusDetailsBody(
                             <label htmlFor='driverName'>Driver</label>
                         </td>
                         <td>
-                            {!isNewDriver?<select id='driverName' onChange={handleDriver}>
-                                {drivers.map(userDriver => <option key={userDriver._id} value={userDriver._id} selected={userDriver._id===driver._id}>{userDriver.name}</option>)}
+                            {!isNewDriver?<select id='driverName' onChange={handleDriver} value={driver._id}>
+                                {drivers.map(userDriver => <option key={userDriver._id} value={userDriver._id}>{userDriver.name}</option>)}
                             </select>:
                             <input id='driverName' type='text' value={driver.name} onChange={handleDriverName}/>}
                             {isNewDriver?null:<button onClick={handleAddingNewDiver}>New</button>}

@@ -6,9 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/rootReducer';
+import { createLogger } from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
 
-const redux = require('redux')
-const store = redux.createStore(rootReducer)
+
+const loggerMiddleware = createLogger({
+  // Logger options (optional)
+  // ...
+});
+
+const store = createStore(rootReducer, applyMiddleware(loggerMiddleware))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

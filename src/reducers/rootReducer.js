@@ -1,6 +1,6 @@
 
 const initState = {
-    api: 'http://localhost:4000/api',
+    user: {},
     logedIn: false,
     buses: [],
     events: [],

@@ -1,67 +1,21 @@
 
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import NotFoundPage from './pages/NotFoundPage';
-import LoginForm from './pages/login/Login'
-import BusPage from './pages/bus/BusPage';
-import { useDispatch, useSelector } from 'react-redux';
-import BusDetails from './pages/bus/BusDetails';
-import HomePage from './pages/home/HomePage';
-import EventPage from './pages/event/EventPage';
-import EventDetails from './pages/event/EventDetails';
 import Navbar from './components/Navbar';
-import { useEffect } from 'react';
+import NotFoundPage from './pages/NotFoundPage';
+import BusDetails from './pages/bus/BusDetails';
+import BusPage from './pages/bus/BusPage';
+import EventDetails from './pages/event/EventDetails';
+import EventPage from './pages/event/EventPage';
+import HomePage from './pages/home/HomePage';
+import LoginForm from './pages/login/Login';
 
 function App() {
 
+  // try to use principal
   const logedIn = useSelector(state => state.logedIn)
-  const api = useSelector(state => state.api)
-  const user = useSelector(state => state.user)
-  const update = useSelector(state => state.update)
-  const dispatch = useDispatch()
-
-
-  const getEvents = () => {
-    fetch(api + "/events?user=" + user._id)
-      .then(res => res.json())
-      .then(events => {
-        dispatch({ type: 'setEvents', events: events })
-      })
-  }
-
-  const getBuses = () => {
-    fetch(api + "/buses?user=" + user._id)
-      .then(res => res.json())
-      .then(buses => {
-        dispatch({ type: 'setBuses', buses: buses })
-      })
-  }
-
-  const getDrivers = () => {
-    fetch(api + "/drivers?user=" + user._id)
-      .then(res => res.json())
-      .then(drivers => {
-        drivers = [{ _id: '', name: '__Select__', phone: '', user: '' }, ...drivers]
-        dispatch({ type: 'setDrivers', drivers: drivers })
-      })
-  }
-
-  const init = () => {
-    if (logedIn) {
-      getEvents()
-      getBuses()
-      getDrivers()
-    }
-  }
-
-  useEffect(() => {
-    init()
-  }, [logedIn])
-
-  useEffect(() => {
-    init()
-  }, [update])
-
+  
   if (!logedIn) {
     return (
       <LoginForm />
