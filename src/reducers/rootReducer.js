@@ -10,9 +10,9 @@ const initState = {
 
 const rootReducer = (state = initState, action) => {
     switch (action.type) {
-        case 'setUser':
-            state = { ...state, user: action.user }
-            break
+        // case 'setUser':
+        //     state = { ...state, user: action.user }
+        //     break
         case 'setLogIn':
             state = { ...state, logedIn: action.logedIn }
             break

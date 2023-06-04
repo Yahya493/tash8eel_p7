@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -23,6 +24,7 @@ const Navbar = () => {
   };
 
   const handleLogOut = () => {
+    Cookies.remove('user')
     dispatch({type:'setUser', user: {}})
     dispatch({type: 'setLogIn', logedIn: false})
   };

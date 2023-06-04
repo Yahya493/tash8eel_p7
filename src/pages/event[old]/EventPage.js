@@ -4,11 +4,12 @@ import { getBuses, getEvents } from '../../actions/actions'
 import './EventPage.css'
 import EventPageBody from './components/EventPageBody'
 import EventPageHeader from './components/EventPageHeader'
+import Cookies from 'js-cookie'
 
 export default function EventPage() {
 
   const events = useSelector(state => state.events)
-  const user = useSelector(state => state.user._id)
+  const user = Cookies.get('user')
   const dispatch = useDispatch()
   
   useEffect(() => {

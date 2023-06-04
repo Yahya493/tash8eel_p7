@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './login.css'; // Import the CSS file
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -22,14 +23,15 @@ function LoginForm() {
       .then(res => res.json())
       .then(user => {
         if (user.name === username && user.password === password) {
-          dispatch({
-            type: 'setUser',
-            user: user
-          })
+          // dispatch({
+          //   type: 'setUser',
+          //   user: user
+          // })
           dispatch({
             type: 'setLogIn',
             logedIn: true
           })
+          Cookies.set('user', user._id)
           navigate('/')
           // dispatch({type: 'update'})
         }

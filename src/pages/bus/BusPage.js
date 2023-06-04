@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import BusCreateForm from './components/BusCreateForm'
 import { getBuses, getDrivers } from '../../actions/actions'
+import Cookies from 'js-cookie'
 
 export default function BusPage() {
 
-  const user = useSelector(state => state.user._id)
+  const user = Cookies.get('user')
   const buses = useSelector(state => state.buses)
   const drivers = useSelector(state => state.drivers)
   const [isAdding, setIsAdding] = useState(false)

@@ -1,8 +1,7 @@
-import { AgGridReact } from 'ag-grid-react'
-import React, { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+import { AgGridReact } from 'ag-grid-react';
+import React, { useMemo } from 'react';
+
 
 export default function EventPageBody({ events }) {
 
@@ -64,22 +63,29 @@ export default function EventPageBody({ events }) {
     {
       resizable: true,
       sortable: true,
-      minWidth: 100,
+      width: 170,
+      // flex: 1
     }
   ), [])
 
     const handleRowDoubleClick = (e) => {
       // console.log(e)
-      console.log(e.data._id)
+      // console.log(e.data._id)
+    }
+
+    const handleMouseOver = (e) => {
+      // const key = e.column.colId
+      // console.log(e.value)
     }
 
   return (
-    <div id='body' className="ag-theme-alpine" style={{ height: '400px', width: '100%' }}>
+    <div id='eventPageBody' className="ag-theme-alpine" style={{height: '400px', width: '100%'}}>
       <AgGridReact
         defaultColDef={defaultColDef}
         columnDefs={columnDefs}
         rowData={events}
         onRowDoubleClicked={handleRowDoubleClick}
+        onCellMouseOver={handleMouseOver}
       />
       {/* {events.map(event => <div className='eventCard' key={event._id}>
         <Link to={`/events/${event._id}`} >
