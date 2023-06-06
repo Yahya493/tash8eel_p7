@@ -1,12 +1,28 @@
 import { AgGridReact } from 'ag-grid-react';
 import React, { useMemo } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import BusDetails from '../BusDetails';
 
 export default function BusPageBody({ buses }) {
 
+  const [isEditing, setIsEditing] = useState(false)
+  const [busId, setBusId] = useState()
+
   const drivers = useSelector(state => state.drivers)
-  const navigate = useNavigate()
+
+  const driverInfo = (key) => {
+    if (key === 'name')
+      return p => {
+        const driver = drivers.find(dr => dr._id === p.data.driver)
+        return driver?driver.name:''
+      }
+    if (key === 'phone')
+      return p => {
+        const driver = drivers.find(dr => dr._id === p.data.driver)
+        return driver?driver.phone:''
+      }
+  }
 
   const columnDefs = [
     {
@@ -15,20 +31,18 @@ export default function BusPageBody({ buses }) {
     },
     {
       field: 'driver',
-      flex:1,
-      valueGetter: p => {
-        const driver = drivers.find(dr => dr._id === p.data.driver)
-        return driver.name
-      }
+      flex: 1,
+      valueGetter: driverInfo('name')
     },
     {
       headerName: 'Phone',
       field: 'driver',
+      flex: 1,
+      valueGetter: driverInfo('phone')
+    },
+    {
+      field: 'seats',
       flex:1,
-      valueGetter: p => {
-        const driver = drivers.find(dr => dr._id === p.data.driver)
-        return driver.phone
-      }
     },
     {
       field: 'description',
@@ -41,13 +55,16 @@ export default function BusPageBody({ buses }) {
       resizable: true,
       sortable: true,
       // width: 170,
+      
     }
   ), [])
 
   const handleRowDoubleClick = (e) => {
     // console.log(e)
     // console.log(e.data._id)
-    navigate(`/buses/${e.data._id}`)
+    // navigate(`/buses/${e.data._id}`)
+    setBusId(e.data._id)
+    setIsEditing(true)
   }
 
   const handleMouseOver = (e) => {
@@ -57,6 +74,7 @@ export default function BusPageBody({ buses }) {
 
   return (
     <div id='busPageBody' className="ag-theme-alpine" style={{ height: '400px', width: '100%' }}>
+      {isEditing?<BusDetails id={busId} isEditing={isEditing} exitEditing={setIsEditing}/>:null}
       <AgGridReact
         defaultColDef={defaultColDef}
         columnDefs={columnDefs}

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 3px 10px;
   }
   
   .logo img {
@@ -62,7 +62,7 @@
     width: 60px;
     height: 60px;
     background-image: url("download.png");
-  
+    border-radius: 50%;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

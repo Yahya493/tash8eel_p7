@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 
 
 export default function BusDetailsBody(
-    { 
-        bus, 
+    {
+        bus,
         driver,
         handleName,
         handleSeats,
@@ -13,7 +13,7 @@ export default function BusDetailsBody(
         handleDriverPhone,
         handleDescription
     }
-    ) {
+) {
 
     const [isNewDriver, setIsNewDriver] = useState(false)
 
@@ -32,7 +32,7 @@ export default function BusDetailsBody(
                             <label htmlFor='busName'>Name</label>
                         </td>
                         <td>
-                            <input id='busName' type='text' value={bus.name} onChange={handleName}/>
+                            <input id='busName' type='text' value={bus.name} onChange={handleName} />
                         </td>
                     </tr>
                     <tr>
@@ -40,11 +40,11 @@ export default function BusDetailsBody(
                             <label htmlFor='driverName'>Driver</label>
                         </td>
                         <td>
-                            {!isNewDriver?<select id='driverName' onChange={handleDriver} value={driver._id}>
+                            {!isNewDriver ? <select id='driverName' onChange={handleDriver} value={driver._id}>
                                 {drivers.map(userDriver => <option key={userDriver._id} value={userDriver._id}>{userDriver.name}</option>)}
-                            </select>:
-                            <input id='driverName' type='text' value={driver.name} onChange={handleDriverName}/>}
-                            {isNewDriver?null:<button onClick={handleAddingNewDiver}>New</button>}
+                            </select> :
+                                <input id='driverName' type='text' value={driver.name} onChange={handleDriverName} />}
+                            {isNewDriver ? null : <button onClick={handleAddingNewDiver}>New</button>}
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +52,7 @@ export default function BusDetailsBody(
                             <label htmlFor='phone'>Phone</label>
                         </td>
                         <td>
-                            <input id='phone' type='text' value={driver.phone} onChange={isNewDriver?handleDriverPhone:()=>{}}/>
+                            <input id='phone' type='text' value={driver.phone} onChange={isNewDriver ? handleDriverPhone : () => { }} />
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@ export default function BusDetailsBody(
                             <label htmlFor='seats'>Seats</label>
                         </td>
                         <td>
-                            <input id='seats' type='number' value={bus.seats} onChange={handleSeats}/>
+                            <input id='seats' type='number' value={bus.seats} onChange={handleSeats} />
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@ export default function BusDetailsBody(
                             <label htmlFor='description'>Description</label>
                         </td>
                         <td>
-                            <input id='description' type='text' value={bus.description} onChange={handleDescription}/>
+                            <input id='description' type='text' value={bus.description} onChange={handleDescription} />
                         </td>
                     </tr>
                 </tbody>

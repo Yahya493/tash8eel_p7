@@ -4,7 +4,7 @@ const initState = {
     logedIn: false,
     buses: [],
     events: [],
-    drivres: [],
+    drivers: [{name:'', phone:''}],
     update: 0,
 }
 

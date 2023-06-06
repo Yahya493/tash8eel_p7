@@ -25,16 +25,16 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     Cookies.remove('user')
-    dispatch({type:'setUser', user: {}})
-    dispatch({type: 'setLogIn', logedIn: false})
+    dispatch({ type: 'setUser', user: {} })
+    dispatch({ type: 'setLogIn', logedIn: false })
   };
 
   return (
-    
+
     <div className="Navbar">
       <nav className={isNavOpen ? 'open' : ''}>
         <div className="logoName">
-          <div className="logo"/>
+          <div className="logo" />
           <p>Hiking</p>
         </div>
 
@@ -45,15 +45,10 @@ const Navbar = () => {
           <li><Link to="/trails">Trails</Link></li>
           <li><Link to="/buses">Buses</Link></li>
         </ul>
-        <div className="search">
-        
-     
 
-          <button type="button" className='logOut' onClick={handleLogOut}>
-            Log out
-          </button>
-
-        </div>
+        <button type="button" className='logOut' onClick={handleLogOut}>
+          Log out
+        </button>
 
       </nav>
 
