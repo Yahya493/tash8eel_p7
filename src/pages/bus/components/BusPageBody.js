@@ -78,7 +78,7 @@ export default function BusPageBody({ buses }) {
       <AgGridReact
         defaultColDef={defaultColDef}
         columnDefs={columnDefs}
-        rowData={buses}
+        rowData={buses.filter(bus => bus._id !== '')}
         onRowDoubleClicked={handleRowDoubleClick}
         onCellMouseOver={handleMouseOver}
       />
