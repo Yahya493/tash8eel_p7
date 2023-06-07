@@ -5,16 +5,31 @@ import './EventDetails.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBaseUrl } from '../../actions/urlService'
+import ReactModal from 'react-modal';
 
-export default function EventDetails() {
+ReactModal.setAppElement('#root');
+
+export default function EventDetails({ id, isEditing, exitEditing }) {
+
+    const events = useSelector(state => state.events)
     const [event, setEvent] = useState({ buses: [] })
-    const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    
+    const closeModal = () => {
+        exitEditing(false)
+    };
+
     useEffect(() => {
         const api = getBaseUrl()
-        fetch(api + "/events/" + id)
+        fetch(api + "/events", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({_id: id})
+        })
             .then(res => res.json())
             .then(event => {
                 setEvent({
@@ -35,7 +50,7 @@ export default function EventDetails() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            })
+        })
             .then(res => res.json())
             .then(deletedEvent => {
                 console.log(`${deletedEvent.data.name}: ${deletedEvent.status}`)
@@ -64,7 +79,7 @@ export default function EventDetails() {
         if (!chechForm) return
 
         const api = getBaseUrl()
-        fetch(api + `/updateEvent/${event._id}`,
+        fetch(api + `/updateEvent`,
             {
                 method: 'PATCH',
                 headers: {
@@ -74,9 +89,9 @@ export default function EventDetails() {
             })
             .then(res => res.json())
             .then(updatedEvent => {
+                dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
                 console.log(`Event: ${updatedEvent.name} has been updated`)
-                dispatch({ type: 'update' })
-                navigate(-1)
+                closeModal()
             })
     }
 
@@ -134,28 +149,32 @@ export default function EventDetails() {
         setEvent({ ...event, buses: newBuses })
     }
 
+
     return (
         <div>
-            <EventDetailsHeader
-                handleUpdate={handleUpdate}
-                handleDelete={handleDelete}
-            />
-            <EventDetailsBody
-                event={event}
-                handleName={handleName}
-                handleValidFrom={handleValidFrom}
-                handleValidTo={handleValidTo}
-                handleDepartureTime={handleDepartureTime}
-                handleDepartureLocation={handleDepartureLocation}
-                handleArrivalTime={handleArrivalTime}
-                handleArrivalLocation={handleArrivalLocation}
-                handleNumberOfPerson={handleNumberOfPerson}
-                handleDuration={handleDuration}
-                handleFees={handleFees}
-                handlePublishDate={handlePublishDate}
-                handleDescription={handleDescription}
-                handleBuses={handleBuses}
-            />
+            <ReactModal isOpen={isEditing} onRequestClose={closeModal}>
+                <EventDetailsHeader
+                    handleUpdate={handleUpdate}
+                    handleDelete={handleDelete}
+                    handleCancel={closeModal}
+                />
+                <EventDetailsBody
+                    event={event}
+                    handleName={handleName}
+                    handleValidFrom={handleValidFrom}
+                    handleValidTo={handleValidTo}
+                    handleDepartureTime={handleDepartureTime}
+                    handleDepartureLocation={handleDepartureLocation}
+                    handleArrivalTime={handleArrivalTime}
+                    handleArrivalLocation={handleArrivalLocation}
+                    handleNumberOfPerson={handleNumberOfPerson}
+                    handleDuration={handleDuration}
+                    handleFees={handleFees}
+                    handlePublishDate={handlePublishDate}
+                    handleDescription={handleDescription}
+                    handleBuses={handleBuses}
+                />
+            </ReactModal>
         </div>
     )
 }

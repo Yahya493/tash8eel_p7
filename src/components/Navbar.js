@@ -40,10 +40,9 @@ const Navbar = () => {
 
 
         <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
           <li><Link to="/events">Events</Link></li>
-          <li><Link to="/trails">Trails</Link></li>
           <li><Link to="/buses">Buses</Link></li>
+          <li><Link to="/trails">Trails</Link></li>
         </ul>
 
         <button type="button" className='logOut' onClick={handleLogOut}>

@@ -73,7 +73,7 @@ export default function BusPageBody({ buses }) {
   }
 
   return (
-    <div id='busPageBody' className="ag-theme-alpine" style={{ height: '400px', width: '100%' }}>
+    <div id='busPageBody' className="ag-theme-alpine" /*style={{ height: '83vh', width: '100%' }}*/>
       {isEditing?<BusDetails id={busId} isEditing={isEditing} exitEditing={setIsEditing}/>:null}
       <AgGridReact
         defaultColDef={defaultColDef}

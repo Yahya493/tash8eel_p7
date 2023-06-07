@@ -127,11 +127,15 @@ export default function EventDetailsBody(
                         <td>
                             <div id="eventBuses">
                                 {
-                                    event.buses.map(
-                                        (busId, index) => <select key={busId} onChange={(e) => handleBuses(e, index)} value={busId}>
+                                    (event.buses.length === 0) ?
+                                        <select key={Math.random()} onChange={(e) => handleBuses(e, 0)} value={''}>
                                             {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
                                         </select>
-                                    )
+                                        : event.buses.map(
+                                            (busId, index) => <select key={busId} onChange={(e) => handleBuses(e, index)} value={busId}>
+                                                {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
+                                            </select>
+                                        )
                                 }
                             </div>
                             {/* <input id='buses' type='text' value={event.buses} /> */}

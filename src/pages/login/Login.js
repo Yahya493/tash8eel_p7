@@ -19,7 +19,15 @@ function LoginForm() {
   };
 
   const Login = () => {
-    fetch("http://localhost:4000/api/users?name=" + username)
+    fetch("http://localhost:4000/api/users", {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: username
+      })
+    })
       .then(res => res.json())
       .then(user => {
         if (user.name === username && user.password === password) {

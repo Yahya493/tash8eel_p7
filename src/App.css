@@ -35,6 +35,10 @@ button{
     margin-inline: 5px;
 }
 
+button {
+    cursor: pointer;
+}
+
 button[class='btnDelete'],
 button[class='logOut']
 {
@@ -72,4 +76,9 @@ select{
     border: 1px solid var(--secondery_color);
     box-sizing: border-box;
     border-radius: 4px;
+}
+
+.ag-theme-alpine {
+    height: 83vh;
+    width: 100%;
 }

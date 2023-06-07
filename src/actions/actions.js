@@ -1,8 +1,14 @@
 import { getBaseUrl } from './urlService'
 
-const getEvents = (dispatch, id) => {
-    const api = `${getBaseUrl()}/events?user`
-    fetch(api + "=" + id)
+const getEvents = (dispatch, userId) => {
+    const api = `${getBaseUrl()}/events`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ user: userId })
+    })
         .then(res => res.json())
         .then(events => {
             dispatch({ type: 'setEvents', events: events })
@@ -10,18 +16,31 @@ const getEvents = (dispatch, id) => {
 }
 
 
-const getBuses = (dispatch, id) => {
-    const api = `${getBaseUrl()}/buses?user`
-    fetch(api + "=" + id)
+const getBuses = (dispatch, userId) => {
+    const api = `${getBaseUrl()}/buses`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({user: userId})
+    })
         .then(res => res.json())
         .then(buses => {
+            buses = [{ _id: '', name: '__Select__', driver: '', description: '', user: '' }, ...buses]
             dispatch({ type: 'setBuses', buses: buses })
         })
 }
 
-const getDrivers = (dispatch, id) => {
-    const api = `${getBaseUrl()}/drivers?user`
-    fetch(api + "=" + id)
+const getDrivers = (dispatch, userId) => {
+    const api = `${getBaseUrl()}/drivers`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({user: userId})
+    })
         .then(res => res.json())
         .then(drivers => {
             drivers = [{ _id: '', name: '__Select__', phone: '', user: '' }, ...drivers]

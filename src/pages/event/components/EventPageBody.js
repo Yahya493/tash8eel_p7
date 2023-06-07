@@ -1,9 +1,14 @@
 
 import { AgGridReact } from 'ag-grid-react';
 import React, { useMemo } from 'react';
+import { useState } from 'react';
+import EventDetails from '../EventDetails'
 
 
 export default function EventPageBody({ events }) {
+
+  const [eventId, setEventId] = useState()
+  const [isEditing, setIsEditing] = useState(false)
 
   const dateFormatter = p => {
     const value = p.value.substring(0, 10).split('-')
@@ -12,7 +17,7 @@ export default function EventPageBody({ events }) {
 
   const timeFormatter = p => {
     const value = p.value.substring(11, 16).split(':')
-    let time = (+value[0]>12)?`${+value[0] % 12}:${value[1]} PM`:`${+value[0]}:${value[1]} AM`
+    let time = (+value[0] > 12) ? `${+value[0] % 12}:${value[1]} PM` : `${+value[0]}:${value[1]} AM`
     return time
   }
 
@@ -81,18 +86,21 @@ export default function EventPageBody({ events }) {
     }
   ), [])
 
-    const handleRowDoubleClick = (e) => {
-      // console.log(e)
-      // console.log(e.data._id)
-    }
+  const handleRowDoubleClick = (e) => {
+    // console.log(e)
+    // console.log(e.data._id)
+    setEventId(e.data._id)
+    setIsEditing(true)
+  }
 
-    const handleMouseOver = (e) => {
-      // const key = e.column.colId
-      // console.log(e.value)
-    }
+  const handleMouseOver = (e) => {
+    // const key = e.column.colId
+    // console.log(e.value)
+  }
 
   return (
-    <div id='eventPageBody' className="ag-theme-alpine" style={{height: '400px', width: '100%'}}>
+    <div id='eventPageBody' className="ag-theme-alpine" /*style={{height: '83vh', width: '100%'}}*/>
+      {isEditing ? <EventDetails id={eventId} isEditing={isEditing} exitEditing={setIsEditing} /> : null}
       <AgGridReact
         defaultColDef={defaultColDef}
         columnDefs={columnDefs}

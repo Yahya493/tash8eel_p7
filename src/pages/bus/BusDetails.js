@@ -9,7 +9,7 @@ import ReactModal from 'react-modal';
 
 ReactModal.setAppElement('#root');
 
-export default function BusDetails({ id, isEditing , exitEditing}) {
+export default function BusDetails({ id, isEditing, exitEditing }) {
     const [bus, setBus] = useState({})
     const [driver, setDriver] = useState({})
     const drivers = useSelector(state => state.drivers)
@@ -30,10 +30,22 @@ export default function BusDetails({ id, isEditing , exitEditing}) {
 
     useEffect(() => {
         const api = getBaseUrl()
-        fetch(api + "/buses/" + id)
+        fetch(api + "/buses", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ _id: id })
+        })
             .then(res => res.json())
             .then(bus => {
-                fetch(api + "/drivers/" + bus.driver)
+                fetch(api + "/drivers", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ _id: bus.driver })
+                })
                     .then(res => res.json())
                     .then(driver => {
                         setBus(bus)
@@ -45,7 +57,13 @@ export default function BusDetails({ id, isEditing , exitEditing}) {
     const handleDelete = () => {
         const busInit = buses.find(item => item._id === bus._id)
         const api = getBaseUrl()
-        fetch(api + `/busesByDriver?user=${busInit.user}&driver=${busInit.driver}`)
+        fetch(api + 'buses' /*`/busesByDriver?user=${busInit.user}&driver=${busInit.driver}`*/, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ user: busInit.user, driver:  busInit.driver})
+        })
             .then(res => res.json())
             .then(busArray => {
                 if (busArray.length === 1) {
@@ -83,7 +101,7 @@ export default function BusDetails({ id, isEditing , exitEditing}) {
             console.log("Bus name and driver shoudn't be empty!")
             return
         }
-        fetch(api + `/updateBus/${bus._id}`,
+        fetch(api + "/updateBus",
             {
                 method: 'PATCH',
                 headers: {
@@ -122,7 +140,7 @@ export default function BusDetails({ id, isEditing , exitEditing}) {
 
             {/* <button onClick={openModal}>Open Modal</button> */}
             <ReactModal isOpen={isEditing} onRequestClose={closeModal}>
-                <BusDetailsHeader handleUpdate={handleUpdate} handleDelete={handleDelete} handleCancel={closeModal}/>
+                <BusDetailsHeader handleUpdate={handleUpdate} handleDelete={handleDelete} handleCancel={closeModal} />
                 <BusDetailsBody
                     bus={bus}
                     driver={driver}
