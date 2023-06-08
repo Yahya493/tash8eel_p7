@@ -23,16 +23,25 @@
   }
   
   .nav-links li {
-    margin-right: 20px;
+    margin-right: 200px;
   }
   
   .nav-links li a {
     color: #fff;
     text-decoration: none;
+    
+
   }
   
   .nav-links li a:hover {
-    color: #68f74f;
+    background-color: #bfcdb0;
+  color: #ffffff;
+  border: none;
+  padding: 8px 8px;
+
+  border-radius: 4px;
+  cursor: pointer;
+  
   }
   
   .search input[type="text"] {
