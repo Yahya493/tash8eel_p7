@@ -1,12 +1,11 @@
 import React from 'react'
 
-export default function BusPageHeader({isAdding, handleNew, handleSearch, handleSave}) {
+export default function BusPageHeader({ handleNew, handleSearch}) {
 
   return (
     <div id='header'>
       <input id='search' type='text' placeholder='Search...' onChange={handleSearch}/>
-      <button className={isAdding?'btnCancel':''} onClick={handleNew}>{isAdding?'Cancel':'New'}</button>
-      {isAdding?<button onClick={handleSave}>Save</button>:null}
+      <button onClick={handleNew}>New</button>
     </div>
   )
 }

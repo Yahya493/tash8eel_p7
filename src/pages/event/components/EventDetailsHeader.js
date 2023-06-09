@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function BusDetailsHeader({handleDelete, handleUpdate, handleCancel}) {
+export default function EventDetailsHeader({handleDelete, handleUpdate, handleCancel}) {
 
   return (
     <div id='header'>

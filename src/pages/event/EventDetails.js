@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import EventDetailsHeader from './components/EventDetailsHeader'
-import EventDetailsBody from './components/EventDetailsBody'
-import './EventDetails.css'
-import { useNavigate, useParams } from 'react-router-dom'
+import ReactModal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { getBaseUrl } from '../../actions/urlService'
-import ReactModal from 'react-modal';
+import './EventDetails.css'
+import EventDetailsBody from './components/EventDetailsBody'
+import EventDetailsHeader from './components/EventDetailsHeader'
 
 ReactModal.setAppElement('#root');
 

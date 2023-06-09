@@ -8,7 +8,6 @@ import BusDetails from './pages/bus/BusDetails';
 import BusPage from './pages/bus/BusPage';
 import EventDetails from './pages/event/EventDetails';
 import EventPage from './pages/event/EventPage';
-import HomePage from './pages/home/HomePage';
 import LoginForm from './pages/login/Login';
 import Cookies from 'js-cookie';
 import 'ag-grid-community/styles/ag-grid.css';

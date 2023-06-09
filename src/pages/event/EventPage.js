@@ -6,59 +6,59 @@ import EventPageBody from './components/EventPageBody'
 import EventPageHeader from './components/EventPageHeader'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
-import EventCreateForm from './components/EventCreateForm'
+import EventCreateForm from './EventCreateForm'
 
 export default function EventPage() {
 
-  const currentDate = new Date().toISOString().split('T')[0]
+  // const currentDate = new Date().toISOString().split('T')[0]
 
   const events = useSelector(state => state.events)
   const user = Cookies.get('user')
   const dispatch = useDispatch()
   const [isAdding, setIsAdding] = useState(false)
-  const [newEvent, setNewEvent] = useState({
-    name: '',
-    validFrom: currentDate,
-    validTo: currentDate,
-    departureTime: '07:00',
-    arrivalTime: '18:00',
-    departureLocation: '',
-    arrivalLocation: '',
-    trail: '',
-    buses: [],
-    numberOfPerson: 30,
-    duration: 60,
-    photos: [],
-    fees: 15,
-    publishDate: currentDate,
-    description: '',
-    user: user
-  })
+  // const [newEvent, setNewEvent] = useState({
+  //   name: '',
+  //   validFrom: currentDate,
+  //   validTo: currentDate,
+  //   departureTime: '07:00',
+  //   arrivalTime: '18:00',
+  //   departureLocation: '',
+  //   arrivalLocation: '',
+  //   trail: '',
+  //   buses: [],
+  //   numberOfPerson: 30,
+  //   duration: 60,
+  //   photos: [],
+  //   fees: 15,
+  //   publishDate: currentDate,
+  //   description: '',
+  //   user: user
+  // })
 
-  const resetValues = () => {
-    setNewEvent({
-      ...newEvent,
-      name: '',
-      validFrom: currentDate,
-      validTo: currentDate,
-      departureTime: '07:00',
-      arrivalTime: '18:00',
-      departureLocation: '',
-      arrivalLocation: '',
-      trail: '',
-      buses: [],
-      numberOfPerson: 30,
-      duration: 60,
-      photos: [],
-      fees: 15,
-      publishDate: currentDate,
-      description: '',
-    })
-  }
+  // const resetValues = () => {
+  //   setNewEvent({
+  //     ...newEvent,
+  //     name: '',
+  //     validFrom: currentDate,
+  //     validTo: currentDate,
+  //     departureTime: '07:00',
+  //     arrivalTime: '18:00',
+  //     departureLocation: '',
+  //     arrivalLocation: '',
+  //     trail: '',
+  //     buses: [],
+  //     numberOfPerson: 30,
+  //     duration: 60,
+  //     photos: [],
+  //     fees: 15,
+  //     publishDate: currentDate,
+  //     description: '',
+  //   })
+  // }
 
   const handleNew = () => {
-    resetValues()
-    setIsAdding(!isAdding)
+    // resetValues()
+    setIsAdding(true)
   }
 
   useEffect(() => {
@@ -66,28 +66,33 @@ export default function EventPage() {
     getBuses(dispatch, user)
   }, [])
 
-  const handleName = (e) => {
-    setNewEvent({ ...newEvent, name: e.target.value })
-  }
+  // const handleName = (e) => {
+  //   setNewEvent({ ...newEvent, name: e.target.value })
+  // }
 
-  const handleDescription = (e) => {
-    setNewEvent({ ...newEvent, description: e.target.value })
+  // const handleDescription = (e) => {
+  //   setNewEvent({ ...newEvent, description: e.target.value })
+  // }
+
+  const exitAdding = () => {
+    setIsAdding(false)
   }
 
   return (
     <div>
       <EventPageHeader
-        isAdding={isAdding}
         handleNew={handleNew}
       />
       {isAdding ? <EventCreateForm
-        event={newEvent}
-        handleName={handleName}
+        isAdding={isAdding}
+        exitAdding={exitAdding}
+        // event={newEvent}
+        // handleName={handleName}
         // handleDriver={handleDriver}
         // handleDriverName={handleDriverName}
         // handleDriverPhone={handleDriverPhone}
         // handleSeats={handleSeats}
-        handleDescription={handleDescription}
+        // handleDescription={handleDescription}
       /> : null}
       <EventPageBody events={events} />
     </div>

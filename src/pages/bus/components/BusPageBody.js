@@ -27,7 +27,7 @@ export default function BusPageBody({ buses }) {
   const columnDefs = [
     {
       field: 'name',
-      flex: 1
+      flex: 1,
     },
     {
       field: 'driver',
