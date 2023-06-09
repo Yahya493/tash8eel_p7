@@ -6,6 +6,7 @@ import { getBaseUrl } from '../../actions/urlService'
 import './EventDetails.css'
 import EventCreateBody from './components/EventCreateBody'
 import EventCreateHeader from './components/EventCreateHeader'
+import { saveEvent } from '../../actions/actions'
 
 ReactModal.setAppElement('#root');
 
@@ -68,22 +69,23 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
     const handleSave = () => {
         if (!chechForm) return
 
+        saveEvent(dispatch, eventDataToSave(), events, closeModal)
         // console.log(eventDataToSave())
-        const api = getBaseUrl()
-        fetch(api + `/insertEvent`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventDataToSave())
-            })
-            .then(res => res.json())
-            .then(savedEvent => {
-                dispatch({ type: 'setEvents', events: [savedEvent, ...events] })
-                console.log(`Event: ${savedEvent.name} has been saved`)
-                closeModal()
-            })
+        // const api = getBaseUrl()
+        // fetch(api + `/insertEvent`,
+        //     {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(eventDataToSave())
+        //     })
+        //     .then(res => res.json())
+        //     .then(savedEvent => {
+        //         dispatch({ type: 'setEvents', events: [savedEvent, ...events] })
+        //         console.log(`Event: ${savedEvent.name} has been saved`)
+        //         closeModal()
+        //     })
     }
 
     const handleName = (e) => {

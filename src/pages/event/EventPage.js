@@ -10,54 +10,13 @@ import EventCreateForm from './EventCreateForm'
 
 export default function EventPage() {
 
-  // const currentDate = new Date().toISOString().split('T')[0]
-
   const events = useSelector(state => state.events)
   const user = Cookies.get('user')
   const dispatch = useDispatch()
   const [isAdding, setIsAdding] = useState(false)
-  // const [newEvent, setNewEvent] = useState({
-  //   name: '',
-  //   validFrom: currentDate,
-  //   validTo: currentDate,
-  //   departureTime: '07:00',
-  //   arrivalTime: '18:00',
-  //   departureLocation: '',
-  //   arrivalLocation: '',
-  //   trail: '',
-  //   buses: [],
-  //   numberOfPerson: 30,
-  //   duration: 60,
-  //   photos: [],
-  //   fees: 15,
-  //   publishDate: currentDate,
-  //   description: '',
-  //   user: user
-  // })
-
-  // const resetValues = () => {
-  //   setNewEvent({
-  //     ...newEvent,
-  //     name: '',
-  //     validFrom: currentDate,
-  //     validTo: currentDate,
-  //     departureTime: '07:00',
-  //     arrivalTime: '18:00',
-  //     departureLocation: '',
-  //     arrivalLocation: '',
-  //     trail: '',
-  //     buses: [],
-  //     numberOfPerson: 30,
-  //     duration: 60,
-  //     photos: [],
-  //     fees: 15,
-  //     publishDate: currentDate,
-  //     description: '',
-  //   })
-  // }
+  const [query, setQuery] = useState('')
 
   const handleNew = () => {
-    // resetValues()
     setIsAdding(true)
   }
 
@@ -66,35 +25,41 @@ export default function EventPage() {
     getBuses(dispatch, user)
   }, [])
 
-  // const handleName = (e) => {
-  //   setNewEvent({ ...newEvent, name: e.target.value })
-  // }
-
-  // const handleDescription = (e) => {
-  //   setNewEvent({ ...newEvent, description: e.target.value })
-  // }
-
   const exitAdding = () => {
     setIsAdding(false)
+  }
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value)
+  }
+
+  const contains = (event, str) => {
+    str = str.toLowerCase()
+    return event.name.toLowerCase().includes(str) ||
+      event.validFrom.includes(str) ||
+      event.validTo.includes(str) ||
+      event.departureTime.includes(str) ||
+      event.arrivalTime.includes(str) ||
+      event.departureLocation.toLowerCase().includes(str) ||
+      event.arrivalLocation.toLowerCase().includes(str) ||
+      event.duration + '' === str ||
+      event.numberOfPerson + '' === str ||
+      event.fees + '' === str ||
+      event.publishDate.includes(str) ||
+      event.description.toLowerCase().includes(str)
   }
 
   return (
     <div>
       <EventPageHeader
         handleNew={handleNew}
+        handleSearch={handleSearch}
       />
       {isAdding ? <EventCreateForm
         isAdding={isAdding}
         exitAdding={exitAdding}
-        // event={newEvent}
-        // handleName={handleName}
-        // handleDriver={handleDriver}
-        // handleDriverName={handleDriverName}
-        // handleDriverPhone={handleDriverPhone}
-        // handleSeats={handleSeats}
-        // handleDescription={handleDescription}
       /> : null}
-      <EventPageBody events={events} />
+      <EventPageBody events={events.filter(event => contains(event, query))} />
     </div>
   )
 }

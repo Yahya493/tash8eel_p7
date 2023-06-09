@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/NotFoundPage.css'
+import '../../styles/NotFoundPage.css'
 
 export default function NotFoundPage() {
   return (

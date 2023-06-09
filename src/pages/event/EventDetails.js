@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { getBaseUrl } from '../../actions/urlService'
-import './EventDetails.css'
+import { deleteEvent, getEventById, updateEvent } from '../../actions/actions'
 import EventDetailsBody from './components/EventDetailsBody'
 import EventDetailsHeader from './components/EventDetailsHeader'
+import './EventDetails.css'
 
 ReactModal.setAppElement('#root');
 
@@ -14,7 +13,6 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     const events = useSelector(state => state.events)
     const [event, setEvent] = useState({ buses: [] })
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     
     const closeModal = () => {
@@ -22,41 +20,43 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     };
 
     useEffect(() => {
-        const api = getBaseUrl()
-        fetch(api + "/events", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({_id: id})
-        })
-            .then(res => res.json())
-            .then(event => {
-                setEvent({
-                    ...event,
-                    validFrom: event.validFrom.substring(0, 10),
-                    validTo: event.validTo.substring(0, 10),
-                    departureTime: event.departureTime.substring(11, 16),
-                    arrivalTime: event.arrivalTime.substring(11, 16),
-                    publishDate: event.publishDate.substring(0, 10),
-                })
-            })
+        getEventById(id, setEvent)
+        // const api = getBaseUrl()
+        // fetch(api + "/events", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({_id: id})
+        // })
+        //     .then(res => res.json())
+        //     .then(event => {
+        //         setEvent({
+        //             ...event,
+        //             validFrom: event.validFrom.substring(0, 10),
+        //             validTo: event.validTo.substring(0, 10),
+        //             departureTime: event.departureTime.substring(11, 16),
+        //             arrivalTime: event.arrivalTime.substring(11, 16),
+        //             publishDate: event.publishDate.substring(0, 10),
+        //         })
+        //     })
     }, [])
 
     const handleDelete = () => {
-        const api = getBaseUrl()
-        fetch(api + `/deleteEvent/${event._id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(res => res.json())
-            .then(deletedEvent => {
-                console.log(`${deletedEvent.data.name}: ${deletedEvent.status}`)
-                dispatch({ type: 'update' })
-                navigate(-1)
-            })
+        deleteEvent(dispatch, event, events, closeModal)
+        // const api = getBaseUrl()
+        // fetch(api + `/deleteEvent/${event._id}`, {
+        //     method: 'DELETE',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        //     .then(res => res.json())
+        //     .then(deletedEvent => {
+        //         dispatch({ type: 'setEvents', events: events.filter(events => events._id !== deletedEvent._id) })
+        //         console.log(`${deletedEvent.data.name}: ${deletedEvent.status}`)
+        //         closeModal()
+        //     })
     }
 
     const chechForm = () => {
@@ -78,21 +78,22 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     const handleUpdate = () => {
         if (!chechForm) return
 
-        const api = getBaseUrl()
-        fetch(api + `/updateEvent`,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(eventDataToUpload())
-            })
-            .then(res => res.json())
-            .then(updatedEvent => {
-                dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
-                console.log(`Event: ${updatedEvent.name} has been updated`)
-                closeModal()
-            })
+        updateEvent(dispatch, eventDataToUpload(), events, closeModal)
+        // const api = getBaseUrl()
+        // fetch(api + `/updateEvent`,
+        //     {
+        //         method: 'PATCH',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(eventDataToUpload())
+        //     })
+        //     .then(res => res.json())
+        //     .then(updatedEvent => {
+                // dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
+        //         console.log(`Event: ${updatedEvent.name} has been updated`)
+        //         closeModal()
+        //     })
     }
 
     const handleName = (e) => {

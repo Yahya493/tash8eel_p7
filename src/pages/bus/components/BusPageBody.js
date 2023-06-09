@@ -73,7 +73,7 @@ export default function BusPageBody({ buses }) {
   }
 
   return (
-    <div id='busPageBody' className="ag-theme-alpine" /*style={{ height: '83vh', width: '100%' }}*/>
+    <div id='busPageBody' className="ag-theme-alpine" >
       {isEditing?<BusDetails id={busId} isEditing={isEditing} exitEditing={setIsEditing}/>:null}
       <AgGridReact
         defaultColDef={defaultColDef}
@@ -81,16 +81,8 @@ export default function BusPageBody({ buses }) {
         rowData={buses.filter(bus => bus._id !== '')}
         onRowDoubleClicked={handleRowDoubleClick}
         onCellMouseOver={handleMouseOver}
+        animateRows={true}
       />
-      {/* {buses.map(bus => <div className='busCard' key={bus._id}>
-        <Link to={`/buses/${bus._id}`}>
-          <h5>{bus.name}</h5>
-          <div>
-            Seats: {bus.seats}<br />
-            Description: {bus.description}
-          </div>
-        </Link>
-      </div>)} */}
     </div>
   )
 }

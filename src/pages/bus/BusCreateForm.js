@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
+import { saveBus } from '../../actions/actions'
 import { getBaseUrl } from '../../actions/urlService'
 import './BusDetails.css'
 import BusCreateBody from './components/BusCreateBody'
@@ -59,70 +60,72 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
     }
 
     const handleSave = async () => {
-        if (checkForm()) {
-            const api = getBaseUrl()
-            try {
-                fetch(api + '/insertDriver', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newDriver)
-                })
-                    .then(res => res.json())
-                    .then(driverRes => {
-                        // setNewDriver(driverRes)
-                        dispatch({ type: 'setDrivers', drivers: [...drivers, driverRes] })
-                        try {
-                            fetch(api + '/insertBus', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ ...newBus, driver: driverRes._id })
-                            })
-                                .then(res => res.json())
-                                .then(busRes => {
-                                    console.log(busRes)
-                                    dispatch({ type: 'setBuses', buses: [busRes, ...buses] })
-                                    closeModal()
-                                })
-                        }
-                        catch (error) {
-                            console.error('Error:', error)
-                        }
-                    })
-            }
-            catch (error) {
-                console.error("Error: " + error)
-            }
-        }
+        if (!checkForm()) return
+
+        saveBus(dispatch, newBus, newDriver, buses, drivers, closeModal)
+        // const api = getBaseUrl()
+        // try {
+        //     fetch(api + '/insertDriver', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(newDriver)
+        //     })
+        //         .then(res => res.json())
+        //         .then(driverRes => {
+        //             // setNewDriver(driverRes)
+        //             dispatch({ type: 'setDrivers', drivers: [...drivers, driverRes] })
+        //             try {
+        //                 fetch(api + '/insertBus', {
+        //                     method: 'POST',
+        //                     headers: {
+        //                         'Content-Type': 'application/json',
+        //                     },
+        //                     body: JSON.stringify({ ...newBus, driver: driverRes._id })
+        //                 })
+        //                     .then(res => res.json())
+        //                     .then(busRes => {
+        //                         console.log(busRes)
+        //                         dispatch({ type: 'setBuses', buses: [busRes, ...buses] })
+        //                         closeModal()
+        //                     })
+        //             }
+        //             catch (error) {
+        //                 console.error('Error:', error)
+        //             }
+        //         })
+        // }
+        // catch (error) {
+        //     console.error("Error: " + error)
+        // }
+
     }
 
     const handleName = (e) => {
         setNewBus({ ...newBus, name: e.target.value })
-      }
-    
-      const handleSeats = (e) => {
+    }
+
+    const handleSeats = (e) => {
         setNewBus({ ...newBus, seats: e.target.value })
-      }
-    
-      const handleDescription = (e) => {
+    }
+
+    const handleDescription = (e) => {
         setNewBus({ ...newBus, description: e.target.value })
-      }
-    
-      const handleDriver = (e) => {
+    }
+
+    const handleDriver = (e) => {
         setNewBus({ ...newBus, driver: e.target.value })
         setNewDriver(drivers.find(driver => driver._id === e.target.value))
-      }
-    
-      const handleDriverName = (e) => {
+    }
+
+    const handleDriverName = (e) => {
         setNewDriver({ ...newDriver, name: e.target.value })
-      }
-    
-      const handleDriverPhone = (e) => {
+    }
+
+    const handleDriverPhone = (e) => {
         setNewDriver({ ...newDriver, phone: e.target.value })
-      }
+    }
 
 
     return (
