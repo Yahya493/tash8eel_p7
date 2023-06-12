@@ -35,7 +35,7 @@ const Navbar = () => {
       <nav className={isNavOpen ? 'open' : ''}>
         <div className="logoName">
           <div className="logo" />
-          <p>Hiking</p>
+          <p id='siteName'>Hiking</p>
         </div>
 
 

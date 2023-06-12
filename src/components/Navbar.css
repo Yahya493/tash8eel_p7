@@ -132,3 +132,12 @@ nav {
     color: #3fcd1c;
   }
 }
+
+#siteName {
+  font-size: 32px;
+  font-weight: bolder;
+  margin-left: 10px;
+  padding: 0;
+  margin-block: auto;
+  font-family:Arial, Helvetica, sans-serif;
+}
