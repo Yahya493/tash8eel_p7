@@ -253,6 +253,27 @@ const saveBus = (dispatch, bus, driver, buses, drivers, closeModal) => {
     }
 }
 
+const saveDriver = (dispatch, driver, drivers) => {
+    const api = getBaseUrl()
+    try {
+        fetch(api + '/insertDriver', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(driver)
+        })
+            .then(res => res.json())
+            .then(driverRes => {
+                // setNewDriver(driverRes)
+                dispatch({ type: 'setDrivers', drivers: [...drivers, driverRes] })
+            })
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
 export {
     getEvents,
     getBuses,
@@ -265,5 +286,5 @@ export {
     deleteBus,
     updateBus,
     saveBus,
-    
+    saveDriver,
 }

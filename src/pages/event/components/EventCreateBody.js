@@ -10,31 +10,30 @@ export default function EventCreateBody(
     {
         event,
         handleName,
+        nameVald,
         handleValidFrom,
+        validFromVald,
         handleValidTo,
+        validToVald,
         handleDepartureTime,
         handleDepartureLocation,
+        departureLocationVald,
         handleArrivalTime,
         handleArrivalLocation,
+        arrivalLocatioVald,
         handleNumberOfPerson,
         handleDuration,
         handleFees,
         handlePublishDate,
+        publishDateVald,
         handleDescription,
         handleBuses,
+        busesVald,
+        trailVald,
         setEvent,
     }) {
 
     const buses = useSelector(state => state.buses)
-
-    const [nameVald, setNameVald] = useState('*')
-    const [validFromVald, setValidFromVald] = useState('*')
-    const [validToVald, setValidToVald] = useState('*')
-    const [publishDateVald, setPublishDateVald] = useState('*')
-    const [departureLocationVald, setDepartureLocationVald] = useState('*')
-    const [arrivalLocatioVald, setArrivalLocatioVald] = useState('*')
-    const [trailVald, setTrailVald] = useState('*')
-    const [busesVald, setBusesVald] = useState('*')
 
     return (
         <div className='eventCreateBody'>
@@ -121,7 +120,7 @@ export default function EventCreateBody(
                                             {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
                                         </select> :
                                         // event.buses.map( (busId, index) => 
-                                        <select /*key={busId}*/ onChange={(e) => handleBuses(e /*, index*/)} value={event.buses[0]/*busId*/}>
+                                        <select /*key={busId}*/ onChange={(e) => handleBuses(e , 0)} value={event.buses[0]/*busId*/}>
                                             {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
                                         </select>
                                     // )

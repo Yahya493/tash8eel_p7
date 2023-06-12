@@ -19,6 +19,9 @@ export default function BusDetails({ id, isEditing, exitEditing }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [busNameVald, setBusNameVal] = useState('*')
+    const [driverVald, setDriverVal] = useState('*')
+
     // const [isOpen, setIsOpen] = useState(isEditing);
 
     // const openModal = () => {
@@ -98,7 +101,25 @@ export default function BusDetails({ id, isEditing, exitEditing }) {
         //     })
     }
 
+    const checkBusForm = () => {
+        setBusNameVal('*')
+        setDriverVal('*')
+        let valide = true
+
+        if (bus.name === '') {
+            setBusNameVal('required')
+            valide = false
+        }
+        if (bus.driver === '') {
+            setDriverVal('required')
+            valide = false
+        }
+
+        return valide
+    }
+
     const handleUpdate = () => {
+        if(!checkBusForm()) return
 
         updateBus(dispatch, bus, buses, closeModal)
         // const api = getBaseUrl()
@@ -153,6 +174,8 @@ export default function BusDetails({ id, isEditing, exitEditing }) {
                     handleSeats={handleSeats}
                     handleDriver={handleDriver}
                     handleDescription={handleDescription}
+                    busNameVald={busNameVald}
+                    driverVald={driverVald}
                 />
             </ReactModal>
         </div>

@@ -18,6 +18,15 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
 
     const dispatch = useDispatch()
 
+    const [nameVald, setNameVald] = useState('*')
+    const [validFromVald, setValidFromVald] = useState('*')
+    const [validToVald, setValidToVald] = useState('*')
+    const [publishDateVald, setPublishDateVald] = useState('*')
+    const [departureLocationVald, setDepartureLocationVald] = useState('*')
+    const [arrivalLocatioVald, setArrivalLocatioVald] = useState('*')
+    const [trailVald, setTrailVald] = useState('*')
+    const [busesVald, setBusesVald] = useState('*')
+
     const resetValues = () => {
         setNewEvent({
             ...newEvent,
@@ -29,7 +38,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
             departureLocation: '',
             arrivalLocation: '',
             trail: 'trail',
-            buses: [],
+            buses: [''],
             numberOfPerson: 30,
             duration: 60,
             photos: [],
@@ -50,8 +59,52 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
 
 
     const chechForm = () => {
+        setNameVald('*')
+        setValidFromVald('*')
+        setValidToVald('*')
+        setPublishDateVald('*')
+        setDepartureLocationVald('*')
+        setArrivalLocatioVald('*')
+        setTrailVald('*')
+        setBusesVald('*')
 
-        return true
+        let valide = true
+        const today = new Date().toISOString().split('T')[0]
+
+        if(newEvent.name === '') {
+            setNameVald('required')
+            valide = false
+        }
+        if(newEvent.validFrom < today) {
+            setValidFromVald("Can't be less than today")
+            valide = false
+        }
+        if(newEvent.validTo < newEvent.validFrom) {
+            setValidToVald("Can't be less than valide from")
+            valide = false
+        }
+        if(newEvent.publishDate < today) {
+            setPublishDateVald("Can't be less than today")
+            valide = false
+        }
+        if(newEvent.departureLocation === '') {
+            setDepartureLocationVald('required')
+            valide = false
+        }
+        if(newEvent.arrivalLocation === '') {
+            setArrivalLocatioVald('required')
+            valide = false
+        }
+        if(newEvent.trail === '') {
+            setTrailVald('required')
+            valide = false
+        }
+        if(newEvent.buses[0] === '') {
+            setBusesVald('required')
+            valide = false
+        }
+
+        return valide
     }
 
     const eventDataToSave = () => {
@@ -153,18 +206,26 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
                 <EventCreateBody
                     event={newEvent}
                     handleName={handleName}
+                    nameVald={nameVald}
                     handleValidFrom={handleValidFrom}
+                    validFromVald={validFromVald}
                     handleValidTo={handleValidTo}
+                    validToVald={validToVald}
                     handleDepartureTime={handleDepartureTime}
                     handleDepartureLocation={handleDepartureLocation}
+                    departureLocationVald={departureLocationVald}
                     handleArrivalTime={handleArrivalTime}
                     handleArrivalLocation={handleArrivalLocation}
+                    arrivalLocatioVald={arrivalLocatioVald}
                     handleNumberOfPerson={handleNumberOfPerson}
                     handleDuration={handleDuration}
                     handleFees={handleFees}
                     handlePublishDate={handlePublishDate}
+                    publishDateVald={publishDateVald}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    busesVald={busesVald}
+                    trailVald={trailVald}
                     setEvent={setNewEvent}
                 />
             </ReactModal>

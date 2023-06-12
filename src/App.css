@@ -38,6 +38,7 @@ button{
 }
 
 button {
+    padding-block: 5px;
     cursor: pointer;
 }
 
@@ -71,7 +72,8 @@ input[type='date'],
 input[type='time'],
 input[type='file'],
 select{
-    padding: 10px;
+    padding-block: 5px;
+    padding-inline: 10px;
     margin-inline: 5px;
     
     display: inline-block;
@@ -104,7 +106,7 @@ input[type='file'] {
 }
 
 .eventDetailsBody,
-.eventCreateBody 
+.eventCreateBody
 {
     padding-block: 10px;
     padding-inline: 20px;
@@ -114,11 +116,39 @@ input[type='file'] {
     height: 500px;
 }
 
+.busDetailsBody {
+    padding-block: 20px;
+    padding-inline: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary_color);
+    height: 210px;
+}
+
 .eventDetailsBody table,
-.eventCreateBody table{
+.eventCreateBody table
+{
     flex: 3;
     padding-right: 20px;
     /* border: 2px solid grey; */
+}
+
+.busDetailsBody table:nth-child(1) {
+    flex: 3;
+    padding-right: 20px;
+
+}
+
+.busDetailsBody table:nth-child(2) {
+    flex: 1;
+    padding-inline: 5px;
+    border: 2px solid lightgray;
+}
+
+.busDetailsBody #btnCell {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .eventDetailsBody input,
@@ -126,7 +156,10 @@ input[type='file'] {
 .eventDetailsBody textarea,
 .eventCreateBody input,
 .eventCreateBody select,
-.eventCreateBody textarea
+.eventCreateBody textarea,
+.busDetailsBody input,
+.busDetailsBody select,
+.busDetailsBody textarea
 {
     padding-block: 5px;
     border: 1px solid grey;
@@ -143,7 +176,8 @@ input[type='file'] {
 }
 
 .eventDetailsBody button,
-.eventCreateBody button
+.eventCreateBody button,
+.busDetailsBody button
 {
     display: block;
     margin: 10px auto;

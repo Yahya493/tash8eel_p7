@@ -14,6 +14,14 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     const [event, setEvent] = useState({ buses: [], photos: [] })
     const dispatch = useDispatch()
 
+    const [nameVald, setNameVald] = useState('*')
+    const [validFromVald, setValidFromVald] = useState('*')
+    const [validToVald, setValidToVald] = useState('*')
+    const [publishDateVald, setPublishDateVald] = useState('*')
+    const [departureLocationVald, setDepartureLocationVald] = useState('*')
+    const [arrivalLocatioVald, setArrivalLocatioVald] = useState('*')
+    const [trailVald, setTrailVald] = useState('*')
+    const [busesVald, setBusesVald] = useState('*')
 
     const closeModal = () => {
         exitEditing(false)
@@ -60,8 +68,52 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     }
 
     const chechForm = () => {
+        setNameVald('*')
+        setValidFromVald('*')
+        setValidToVald('*')
+        setPublishDateVald('*')
+        setDepartureLocationVald('*')
+        setArrivalLocatioVald('*')
+        setTrailVald('*')
+        setBusesVald('*')
 
-        return true
+        let valide = true
+        const today = new Date().toISOString().split('T')[0]
+
+        if(event.name === '') {
+            setNameVald('required')
+            valide = false
+        }
+        if(event.validFrom < today) {
+            setValidFromVald("Can't be less than today")
+            valide = false
+        }
+        if(event.validTo < event.validFrom) {
+            setValidToVald("Can't be less than valide from")
+            valide = false
+        }
+        if(event.publishDate < today) {
+            setPublishDateVald("Can't be less than today")
+            valide = false
+        }
+        if(event.departureLocation === '') {
+            setDepartureLocationVald('required')
+            valide = false
+        }
+        if(event.arrivalLocation === '') {
+            setArrivalLocatioVald('required')
+            valide = false
+        }
+        if(event.trail === '') {
+            setTrailVald('required')
+            valide = false
+        }
+        if(event.buses[0] === '') {
+            setBusesVald('required')
+            valide = false
+        }
+
+        return valide
     }
 
     const eventDataToUpload = () => {
@@ -76,7 +128,7 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     }
 
     const handleUpdate = () => {
-        if (!chechForm) return
+        if (!chechForm()) return
 
         updateEvent(dispatch, eventDataToUpload(), events, closeModal)
         // const api = getBaseUrl()
@@ -162,19 +214,28 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
                 <EventDetailsBody
                     event={event}
                     handleName={handleName}
+                    nameVald={nameVald}
                     handleValidFrom={handleValidFrom}
+                    validFromVald={validFromVald}
                     handleValidTo={handleValidTo}
+                    validToVald={validToVald}
                     handleDepartureTime={handleDepartureTime}
                     handleDepartureLocation={handleDepartureLocation}
+                    departureLocationVald={departureLocationVald}
                     handleArrivalTime={handleArrivalTime}
                     handleArrivalLocation={handleArrivalLocation}
+                    arrivalLocatioVald={arrivalLocatioVald}
                     handleNumberOfPerson={handleNumberOfPerson}
                     handleDuration={handleDuration}
                     handleFees={handleFees}
                     handlePublishDate={handlePublishDate}
+                    publishDateVald={publishDateVald}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    busesVald={busesVald}
+                    trailVald={trailVald}
                     setEvent={setEvent}
+                    
                 />
             </ReactModal>
         </div>
