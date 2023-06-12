@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 * {
     --primary_color: #f8f8f8;
     --secondery_color: #376b3a;  /*used for button/titles*/
@@ -49,7 +51,7 @@ button[class='btnCancel'] {
     background-color: orange;
 }
 
-#header {
+.header {
     width: auto;
     height: fit-content;
     padding: 10px;
@@ -57,7 +59,7 @@ button[class='btnCancel'] {
     justify-content: end;
     align-items: center;
     background-color: var(--primary_color);
-    border: 1px solid lightgray;
+    border-bottom: 3px solid grey;
     /* background-color: #f8f8f8; */
     /* border-radius: 8px 8px 0 0; */
     /* margin-bottom: 10px; */
@@ -67,8 +69,20 @@ input[type='text'],
 input[type='number'], 
 input[type='date'],
 input[type='time'],
+input[type='file'],
 select{
     padding: 10px;
+    margin-inline: 5px;
+    
+    display: inline-block;
+    /* border: 1px solid #ccc; */
+    border: 1px solid var(--secondery_color);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input[type='file'] {
+    /* padding: 10px; */
     margin-inline: 5px;
     
     display: inline-block;
@@ -81,4 +95,54 @@ select{
 .ag-theme-alpine {
     height: 83vh;
     width: 100%;
+}
+
+.inputValidation {
+    color: red;
+    font-size: 16px;
+    margin-block: -5px;
+}
+
+.eventDetailsBody {
+    padding-block: 10px;
+    padding-inline: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary_color);
+    height: 500px;
+}
+
+.eventDetailsBody table{
+    flex: 3;
+    padding-right: 20px;
+    /* border: 2px solid grey; */
+}
+
+.eventDetailsBody input,
+.eventDetailsBody select,
+.eventDetailsBody textarea
+{
+    padding-block: 5px;
+    border: 1px solid grey;
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+}
+
+
+.eventDetailsBody .gallery{
+    flex: 2;
+}
+
+.eventDetailsBody button{
+    display: block;
+    margin: 10px auto;
+}
+
+.reactModal {
+    width: 70%;
+    margin: 10vh auto;
+    border: 3px solid var(--secondery_color);
+    
+    /* background-color: aqua; */
 }

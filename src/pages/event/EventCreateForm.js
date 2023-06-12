@@ -2,7 +2,6 @@ import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { getBaseUrl } from '../../actions/urlService'
 import './EventDetails.css'
 import EventCreateBody from './components/EventCreateBody'
 import EventCreateHeader from './components/EventCreateHeader'
@@ -15,7 +14,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
     const events = useSelector(state => state.events)
     const user = Cookies.get('user')
     const currentDate = new Date().toISOString().split('T')[0]
-    const [newEvent, setNewEvent] = useState({buses: []})
+    const [newEvent, setNewEvent] = useState({buses: [], photos: []})
 
     const dispatch = useDispatch()
 
@@ -67,7 +66,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
     }
 
     const handleSave = () => {
-        if (!chechForm) return
+        if (!chechForm()) return
 
         saveEvent(dispatch, eventDataToSave(), events, closeModal)
         // console.log(eventDataToSave())
@@ -145,7 +144,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
 
     return (
         <div>
-            <ReactModal isOpen={isAdding} onRequestClose={closeModal}>
+            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='reactModal'>
                 <EventCreateHeader
                     handleReset={resetValues}
                     handleSave={handleSave}
@@ -166,6 +165,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
                     handlePublishDate={handlePublishDate}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    setEvent={setNewEvent}
                 />
             </ReactModal>
         </div>

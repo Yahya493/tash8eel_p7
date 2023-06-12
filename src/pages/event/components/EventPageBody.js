@@ -80,7 +80,7 @@ export default function EventPageBody({ events }) {
 
   const defaultColDef = useMemo(() => (
     {
-      resizable: true,
+      // resizable: true,
       sortable: true,
       width: 170,
     }

@@ -7,12 +7,31 @@ import Cookies from 'js-cookie';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+
+  const [userNameValidation, setUserNameValidation] = useState('')
+  const [passwordValidation, setPasswordValidation] = useState('')
+
+  const ValidateInput = () => {
+    if(username === '') {
+      setUserNameValidation('required')
+      return false
+    }
+    setUserNameValidation('')
+    if(password === '') {
+      setPasswordValidation('required')
+      return false
+    }
+    setPasswordValidation('')
+    return true
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if(!ValidateInput()) return
     Login();
     // setUsername('');
     // setPassword('');
@@ -30,20 +49,20 @@ function LoginForm() {
     })
       .then(res => res.json())
       .then(user => {
-        if (user.name === username && user.password === password) {
-          // dispatch({
-          //   type: 'setUser',
-          //   user: user
-          // })
+        if(Object.keys(user).length === 0) {
+          setUserNameValidation('invalide user name')
+          return
+        }
+        if (user.password !== password) {
+          setPasswordValidation('incorrect password')
+          return
+        }
           dispatch({
             type: 'setLogIn',
             logedIn: true
           })
           Cookies.set('user', user._id)
           navigate('/')
-          // dispatch({type: 'update'})
-        }
-        else (alert("failed login"))
       })
   }
 
@@ -58,6 +77,7 @@ function LoginForm() {
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
+        <p className='inputValidation'>{userNameValidation}</p>
       </div>
       <div>
         <label htmlFor="password">Password:</label>
@@ -67,6 +87,7 @@ function LoginForm() {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
+        <p className='inputValidation'>{passwordValidation}</p>
       </div>
       <div>
         <button type="submit">Submit</button>

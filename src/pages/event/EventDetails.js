@@ -11,10 +11,10 @@ ReactModal.setAppElement('#root');
 export default function EventDetails({ id, isEditing, exitEditing }) {
 
     const events = useSelector(state => state.events)
-    const [event, setEvent] = useState({ buses: [] })
+    const [event, setEvent] = useState({ buses: [], photos: [] })
     const dispatch = useDispatch()
 
-    
+
     const closeModal = () => {
         exitEditing(false)
     };
@@ -90,7 +90,7 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
         //     })
         //     .then(res => res.json())
         //     .then(updatedEvent => {
-                // dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
+        // dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
         //         console.log(`Event: ${updatedEvent.name} has been updated`)
         //         closeModal()
         //     })
@@ -152,8 +152,8 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
 
 
     return (
-        <div>
-            <ReactModal isOpen={isEditing} onRequestClose={closeModal}>
+        <div >
+            <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='reactModal'>
                 <EventDetailsHeader
                     handleUpdate={handleUpdate}
                     handleDelete={handleDelete}
@@ -174,6 +174,7 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
                     handlePublishDate={handlePublishDate}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    setEvent={setEvent}
                 />
             </ReactModal>
         </div>
