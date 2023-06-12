@@ -61,7 +61,7 @@ function LoginForm() {
             type: 'setLogIn',
             logedIn: true
           })
-          Cookies.set('user', user._id)
+          Cookies.set('user', user._id /*, { expires: 3650 }*/)
           navigate('/')
       })
   }
