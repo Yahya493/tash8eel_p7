@@ -21,6 +21,9 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
 
     const dispatch = useDispatch()
 
+    const [busNameVald, setBusNameVal] = useState('*')
+    const [driverVald, setDriverVal] = useState('*')
+
     const resetValues = () => {
         setNewBus({
             ...newBus,
@@ -45,24 +48,40 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
         resetValues()
     }, [])
 
+    const checkBusForm = () => {
+        setBusNameVal('*')
+        setDriverVal('*')
+        let valide = true
 
-    const checkForm = () => {
         if (newBus.name === '') {
-            console.log("Bus name shouldn't be empty!")
-            return false
+            setBusNameVal('required')
+            valide = false
         }
-        if (newBus.driver === '' && newDriver.name === '') {
-            console.log('Select a driver!')
-            return false
+        if (newBus.driver === '') {
+            setDriverVal('required')
+            valide = false
         }
 
-        return true
+        return valide
     }
 
-    const handleSave = async () => {
-        if (!checkForm()) return
+    // const checkForm = () => {
+    //     if (newBus.name === '') {
+    //         console.log("Bus name shouldn't be empty!")
+    //         return false
+    //     }
+    //     if (newBus.driver === '' && newDriver.name === '') {
+    //         console.log('Select a driver!')
+    //         return false
+    //     }
 
-        saveBus(dispatch, newBus, newDriver, buses, drivers, closeModal)
+    //     return true
+    // }
+
+    const handleSave = async () => {
+        if (!checkBusForm()) return
+
+        saveBus(dispatch, newBus, /*newDriver,*/ buses, /*drivers,*/ closeModal)
         // const api = getBaseUrl()
         // try {
         //     fetch(api + '/insertDriver', {
@@ -129,8 +148,8 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
 
 
     return (
-        <div>
-            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='reactModal'>
+        <div className='busCreateForm'>
+            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='busModal'>
                 <BusCreateHeader
                     handleReset={resetValues}
                     handleSave={handleSave}
@@ -142,9 +161,9 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
                     handleName={handleName}
                     handleFees={handleSeats}
                     handleDriver={handleDriver}
-                    handleDriverName={handleDriverName}
-                    handleDriverPhone={handleDriverPhone}
                     handleDescription={handleDescription}
+                    busNameVald={busNameVald}
+                    driverVald={driverVald}
                 />
             </ReactModal>
         </div>

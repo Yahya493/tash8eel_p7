@@ -214,43 +214,43 @@ const updateBus = (dispatch, bus, buses, closeModal) => {
         })
 }
 
-const saveBus = (dispatch, bus, driver, buses, drivers, closeModal) => {
+const saveBus = (dispatch, bus, /*driver,*/ buses, /*drivers,*/ closeModal) => {
     const api = getBaseUrl()
+    // try {
+    //     fetch(api + '/insertDriver', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(driver)
+    //     })
+    //         .then(res => res.json())
+    //         .then(driverRes => {
+    //             // setNewDriver(driverRes)
+    //             dispatch({ type: 'setDrivers', drivers: [...drivers, driverRes] })
     try {
-        fetch(api + '/insertDriver', {
+        fetch(api + '/insertBus', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(driver)
+            body: JSON.stringify(bus/*{ ...bus, driver: driverRes._id }*/)
         })
             .then(res => res.json())
-            .then(driverRes => {
-                // setNewDriver(driverRes)
-                dispatch({ type: 'setDrivers', drivers: [...drivers, driverRes] })
-                try {
-                    fetch(api + '/insertBus', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ ...bus, driver: driverRes._id })
-                    })
-                        .then(res => res.json())
-                        .then(busRes => {
-                            console.log(busRes)
-                            dispatch({ type: 'setBuses', buses: [busRes, ...buses] })
-                            closeModal()
-                        })
-                }
-                catch (error) {
-                    console.error('Error:', error)
-                }
+            .then(busRes => {
+                console.log(busRes)
+                dispatch({ type: 'setBuses', buses: [busRes, ...buses] })
+                closeModal()
             })
     }
     catch (error) {
-        console.error("Error: " + error)
+        console.error('Error:', error)
     }
+    //         })
+    // }
+    // catch (error) {
+    //     console.error("Error: " + error)
+    // }
 }
 
 const saveDriver = (dispatch, driver, drivers) => {

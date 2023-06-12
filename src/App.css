@@ -116,7 +116,9 @@ input[type='file'] {
     height: 500px;
 }
 
-.busDetailsBody {
+.busDetailsBody,
+.busCreateBody
+{
     padding-block: 20px;
     padding-inline: 20px;
     display: flex;
@@ -183,10 +185,19 @@ input[type='file'] {
     margin: 10px auto;
 }
 
-.reactModal {
+.eventModal
+ {
     width: 70%;
     margin: 10vh auto;
     border: 3px solid var(--secondery_color);
     
     /* background-color: aqua; */
+}
+
+.busModal 
+{
+    width: 70%;
+    margin: 25vh auto;
+    border: 3px solid var(--secondery_color);
+
 }
