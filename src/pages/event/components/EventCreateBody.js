@@ -37,7 +37,7 @@ export default function EventCreateBody(
     const [busesVald, setBusesVald] = useState('*')
 
     return (
-        <div className='eventDetailsBody'>
+        <div className='eventCreateBody'>
             <table>
                 <tbody>
                     <tr>

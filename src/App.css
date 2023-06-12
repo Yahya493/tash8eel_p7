@@ -103,7 +103,9 @@ input[type='file'] {
     margin-block: -5px;
 }
 
-.eventDetailsBody {
+.eventDetailsBody,
+.eventCreateBody 
+{
     padding-block: 10px;
     padding-inline: 20px;
     display: flex;
@@ -112,7 +114,8 @@ input[type='file'] {
     height: 500px;
 }
 
-.eventDetailsBody table{
+.eventDetailsBody table,
+.eventCreateBody table{
     flex: 3;
     padding-right: 20px;
     /* border: 2px solid grey; */
@@ -120,7 +123,10 @@ input[type='file'] {
 
 .eventDetailsBody input,
 .eventDetailsBody select,
-.eventDetailsBody textarea
+.eventDetailsBody textarea,
+.eventCreateBody input,
+.eventCreateBody select,
+.eventCreateBody textarea
 {
     padding-block: 5px;
     border: 1px solid grey;
@@ -130,11 +136,15 @@ input[type='file'] {
 }
 
 
-.eventDetailsBody .gallery{
+.eventDetailsBody .gallery,
+.eventCreateBody .gallery
+{
     flex: 2;
 }
 
-.eventDetailsBody button{
+.eventDetailsBody button,
+.eventCreateBody button
+{
     display: block;
     margin: 10px auto;
 }
