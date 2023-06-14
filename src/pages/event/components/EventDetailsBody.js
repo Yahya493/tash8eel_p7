@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import FilesUpload from '../../../components/FilesUpload'
 import ReactImageGallery from 'react-image-gallery'
 import { useState } from 'react'
 import emptyPhoto from '../../../components/empty-photo.jpg'
+import { getBaseUrl } from '../../../actions/urlService'
 
 
 
@@ -35,6 +36,29 @@ export default function EventDetailsBody(
     }) {
 
     const buses = useSelector(state => state.buses)
+    const [photos, setPhotos] = useState([])
+    const api = getBaseUrl()
+
+    useEffect(
+        () => {
+            for (const photoId of event.photos) {
+                console.log(`downloading: ${photoId}`)
+                fetch(api + '/photos', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ _id: photoId })
+                })
+                    .then(res => res.json())
+                    .then(photo => {
+                        setPhotos(p => [...p, photo.myFile])
+                        console.log(`download finished: ${photoId}`)
+                    })
+            }
+        },
+        [event.photos]
+    )
 
     return (
         <div className='eventDetailsBody'>
@@ -138,18 +162,18 @@ export default function EventDetailsBody(
                     </tr>
                 </tbody>
             </table>
-            <div className='gallery'>
-                <FilesUpload uploadTo='event' object={event} setter={setEvent} />
-                <ReactImageGallery items={(event.photos.length === 0)?
+            <div className='galleryCard'>
+                <FilesUpload uploadTo='event' object={event} setter={setEvent} photos={photos} setPhotos={setPhotos}/>
+                <ReactImageGallery items={(photos.length === 0) ?
                     [{
                         original: emptyPhoto,
                     }]
-                :
-                event.photos.map(photo => {
-                    return {
-                        original: photo,
-                    }
-                })} autoPlay/>
+                    :
+                    photos.map(photo => {
+                        return {
+                            original: photo,
+                        }
+                    })} autoPlay />
             </div>
         </div>
     )

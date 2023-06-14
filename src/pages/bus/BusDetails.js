@@ -165,7 +165,7 @@ export default function BusDetails({ id, isEditing, exitEditing }) {
         <div  className='busDetails'>
 
             {/* <button onClick={openModal}>Open Modal</button> */}
-            <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='busModal'>
+            <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='busModal' shouldCloseOnOverlayClick={false}>
                 <BusDetailsHeader handleUpdate={handleUpdate} handleDelete={handleDelete} handleCancel={closeModal} />
                 <BusDetailsBody
                     bus={bus}

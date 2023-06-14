@@ -11,7 +11,9 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 3px 10px;
+  height: 7vh;
 }
+
 
 .logo img {
   width: 50px;
@@ -29,8 +31,8 @@ nav {
 .nav-links li a {
   color: #fff;
   text-decoration: none;
-
-
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .nav-links li a:hover {
@@ -69,8 +71,8 @@ nav {
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   background-image: url("logo.jpg");
   border-radius: 50%;
   background-size: contain;

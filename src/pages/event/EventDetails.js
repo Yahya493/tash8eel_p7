@@ -205,7 +205,7 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
 
     return (
         <div className='eventDetails'>
-            <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='eventModal'>
+            <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='eventModal' shouldCloseOnOverlayClick={false}>
                 <EventDetailsHeader
                     handleUpdate={handleUpdate}
                     handleDelete={handleDelete}

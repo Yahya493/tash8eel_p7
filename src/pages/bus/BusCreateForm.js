@@ -149,7 +149,7 @@ export default function BusCreateForm({ isAdding, exitAdding }) {
 
     return (
         <div className='busCreateForm'>
-            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='busModal'>
+            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='busModal' shouldCloseOnOverlayClick={false}>
                 <BusCreateHeader
                     handleReset={resetValues}
                     handleSave={handleSave}

@@ -4,6 +4,8 @@ import ReactImageGallery from 'react-image-gallery'
 import { useSelector } from 'react-redux'
 import FilesUpload from '../../../components/FilesUpload'
 import emptyPhoto from '../../../components/empty-photo.jpg'
+import { useEffect } from 'react'
+import { getBaseUrl } from '../../../actions/urlService'
 
 
 export default function EventCreateBody(
@@ -34,6 +36,24 @@ export default function EventCreateBody(
     }) {
 
     const buses = useSelector(state => state.buses)
+    const [photos, setPhotos] = useState([])
+    const api = getBaseUrl()
+
+    // useEffect(
+    //     () => {
+    //         for (const photoId of event.photos)
+    //             fetch(api + '/photos', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     "Content-Type": "application/json"
+    //                 },
+    //                 body: JSON.stringify({ _id: photoId })
+    //             })
+    //             .then(res => res.json())
+    //             .then(photo => setPhotos([...photos, photo.myFile]))
+    //     },
+    //     [event.photos]
+    // )
 
     return (
         <div className='eventCreateBody'>
@@ -120,7 +140,7 @@ export default function EventCreateBody(
                                             {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
                                         </select> :
                                         // event.buses.map( (busId, index) => 
-                                        <select /*key={busId}*/ onChange={(e) => handleBuses(e , 0)} value={event.buses[0]/*busId*/}>
+                                        <select /*key={busId}*/ onChange={(e) => handleBuses(e, 0)} value={event.buses[0]/*busId*/}>
                                             {buses.map(userBus => <option key={userBus._id} value={userBus._id} >{userBus.name}</option>)}
                                         </select>
                                     // )
@@ -137,18 +157,18 @@ export default function EventCreateBody(
                     </tr>
                 </tbody>
             </table>
-            <div className='gallery'>
-                <FilesUpload uploadTo='event' object={event} setter={setEvent} />
-                <ReactImageGallery items={(event.photos.length === 0)?
+            <div className='galleryCard'>
+                <FilesUpload uploadTo='event' object={event} setter={setEvent} photos={photos} setPhotos={setPhotos}/>
+                <ReactImageGallery items={(photos.length === 0) ?
                     [{
                         original: emptyPhoto,
                     }]
-                :
-                event.photos.map(photo => {
-                    return {
-                        original: photo,
-                    }
-                })} autoPlay/>
+                    :
+                    photos.map(photo => {
+                        return {
+                            original: photo,
+                        }
+                    })} autoPlay />
             </div>
         </div>
     )

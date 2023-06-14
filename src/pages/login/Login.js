@@ -3,11 +3,12 @@ import './login.css'; // Import the CSS file
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { getBaseUrl } from '../../actions/urlService';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -16,12 +17,12 @@ function LoginForm() {
   const [passwordValidation, setPasswordValidation] = useState('')
 
   const ValidateInput = () => {
-    if(username === '') {
+    if (username === '') {
       setUserNameValidation('required')
       return false
     }
     setUserNameValidation('')
-    if(password === '') {
+    if (password === '') {
       setPasswordValidation('required')
       return false
     }
@@ -31,14 +32,14 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(!ValidateInput()) return
+    if (!ValidateInput()) return
     Login();
     // setUsername('');
     // setPassword('');
   };
 
   const Login = () => {
-    fetch("http://localhost:4000/api/users", {
+    fetch(getBaseUrl() + "/users", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -49,7 +50,7 @@ function LoginForm() {
     })
       .then(res => res.json())
       .then(user => {
-        if(Object.keys(user).length === 0) {
+        if (Object.keys(user).length === 0) {
           setUserNameValidation('invalide user name')
           return
         }
@@ -57,12 +58,12 @@ function LoginForm() {
           setPasswordValidation('incorrect password')
           return
         }
-          dispatch({
-            type: 'setLogIn',
-            logedIn: true
-          })
-          Cookies.set('user', user._id /*, { expires: 3650 }*/)
-          navigate('/')
+        dispatch({
+          type: 'setLogIn',
+          logedIn: true
+        })
+        Cookies.set('user', user._id /*, { expires: 3650 }*/)
+        navigate('/')
       })
   }
 

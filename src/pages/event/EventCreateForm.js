@@ -197,7 +197,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
 
     return (
         <div className='eventCreateForm'>
-            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='eventModal'>
+            <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='eventModal' shouldCloseOnOverlayClick={false}>
                 <EventCreateHeader
                     handleReset={resetValues}
                     handleSave={handleSave}

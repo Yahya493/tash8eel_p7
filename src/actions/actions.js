@@ -6,7 +6,7 @@ const getEvents = (dispatch, userId) => {
     fetch(api, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({ user: userId })
     })
