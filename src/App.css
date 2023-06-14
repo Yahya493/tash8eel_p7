@@ -89,6 +89,10 @@ input[type='file'] {
     width: 100%;
 }
 
+.body {
+    height: 85vh;
+}
+
 .inputValidation {
     color: red;
     font-size: 12px;

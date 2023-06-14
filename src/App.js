@@ -1,17 +1,16 @@
 
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
-import NotFoundPage from './pages/notFound/NotFoundPage';
-import BusDetails from './pages/bus/BusDetails';
 import BusPage from './pages/bus/BusPage';
-import EventDetails from './pages/event/EventDetails';
 import EventPage from './pages/event/EventPage';
 import LoginForm from './pages/login/Login';
-import Cookies from 'js-cookie';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import NotFoundPage from './pages/notFound/NotFoundPage';
+import TrailPage from './pages/trail/TrailPage';
 
 
 function App() {
@@ -39,8 +38,7 @@ function App() {
           <Route path='/' element={<EventPage />} />
           <Route path='/events' element={<EventPage />} />
           <Route path='/buses' element={<BusPage />} />
-          <Route path='/buses/:id' element={<BusDetails />} />
-          <Route path='/events/:id' element={<EventDetails />} />
+          <Route path='/trails' element={<TrailPage />} />
 
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
