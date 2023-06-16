@@ -1,11 +1,12 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import ReactImageGallery from 'react-image-gallery'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getBaseUrl } from '../../../actions/urlService'
 import FilesUpload from '../../../components/FilesUpload'
 import emptyPhoto from '../../../components/empty-photo.jpg'
 import { useEffect } from 'react'
-import { getBaseUrl } from '../../../actions/urlService'
+import { getTrails } from '../../../actions/actions'
+import Cookies from 'js-cookie'
 
 
 export default function EventCreateBody(
@@ -33,11 +34,20 @@ export default function EventCreateBody(
         busesVald,
         trailVald,
         setEvent,
+        handleTrail
     }) {
 
     const buses = useSelector(state => state.buses)
     const [photos, setPhotos] = useState([])
-    const api = getBaseUrl()
+    const trails = useSelector(state => state.trails)
+    const dispatch = useDispatch()
+    const user = Cookies.get('user')
+
+    useEffect(() => {
+        if (trails.length === 0) {
+            getTrails(dispatch, user)
+        }
+    }, [])
 
     // useEffect(
     //     () => {
@@ -128,7 +138,12 @@ export default function EventCreateBody(
                     <tr>
                         <td colSpan={2}>
                             <label htmlFor='trail'>Trail</label><br />
-                            <input id='trail' type='text' value={event.trail} />
+                            {/* <input id='trail' type='text' value={event.trail} /> */}
+                            <div id="trail">
+                                <select onChange={handleTrail} value={event.trail}>
+                                    {trails.map(userTrail => <option key={userTrail._id} value={userTrail._id} >{userTrail.name}</option>)}
+                                </select>
+                            </div>
                             <p className='inputValidation'>{trailVald}</p>
                         </td>
                         <td>
@@ -158,7 +173,7 @@ export default function EventCreateBody(
                 </tbody>
             </table>
             <div className='galleryCard'>
-                <FilesUpload uploadTo='event' object={event} setter={setEvent} photos={photos} setPhotos={setPhotos}/>
+                <FilesUpload uploadTo='event' object={event} setter={setEvent} photos={photos} setPhotos={setPhotos} />
                 <ReactImageGallery items={(photos.length === 0) ?
                     [{
                         original: emptyPhoto,
