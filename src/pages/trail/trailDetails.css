@@ -1,0 +1,12 @@
+#trailDetailsBody {
+    padding-inline: 10px;
+}
+
+#trailDetailsBody label {
+    font-weight: bold;
+}
+
+#trailDetailsBody td {
+    padding-block: 5px;
+}
+

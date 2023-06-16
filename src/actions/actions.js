@@ -274,6 +274,92 @@ const saveDriver = (dispatch, driver, drivers) => {
     }
 }
 
+const getTrails = (dispatch, userId) => {
+    const api = `${getBaseUrl()}/trails`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ user: userId })
+    })
+        .then(res => res.json())
+        .then(trails => {
+            trails = [{ _id: '', name: '__Select__', distance: '', user: '', description: '' }, ...trails]
+            dispatch({ type: 'setTrails', trails: trails })
+        })
+        .catch(error => console.error("Error: " + error))
+}
+
+const getTrailById = (trailId, setTrail) => {
+    const api = `${getBaseUrl()}/trails`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ _id: trailId })
+    })
+        .then(res => res.json())
+        .then(trail => {
+            setTrail(trail)
+        })
+        .catch(error => console.error("Error: " + error))
+}
+
+const deleteTrail = (dispatch, trail, trails, closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/deleteTrail`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({_id: trail._id})
+    })
+        .then(res => res.json())
+        .then(deletedTrail => {
+            dispatch({ type: 'setTrails', trails: trails.filter(trails => trails._id !== trail._id) })
+            console.log(`${deletedTrail.data.name}: ${deletedTrail.status}`)
+            closeModal()
+        })
+}
+
+const updateTrail = (dispatch, trail, trails, closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/updateTrail`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(trail)
+        })
+        .then(res => res.json())
+        .then(updatedTrail => {
+            dispatch({ type: 'setTrails', trails: [updatedTrail, ...trails.filter(trail => trail._id !== updatedTrail._id)]})
+            console.log(`Trail: ${updatedTrail.name} has been updated`)
+            closeModal()
+        })
+}
+
+const saveTrail = (dispatch, trail, trails, closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/insertTrail`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(trail)
+        })
+        .then(res => res.json())
+        .then(savedTrail => {
+            dispatch({ type: 'setTrails', trails: [savedTrail, ...trails] })
+            console.log(`Trail: ${savedTrail.name} has been saved`)
+            closeModal()
+        })
+}
+
 export {
     getEvents,
     getBuses,
@@ -287,4 +373,9 @@ export {
     updateBus,
     saveBus,
     saveDriver,
+    getTrails,
+    getTrailById,
+    deleteTrail,
+    updateTrail,
+    saveTrail,
 }

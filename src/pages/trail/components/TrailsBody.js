@@ -1,31 +1,57 @@
-import React from 'react'
-import * as ScrollArea from '@radix-ui/react-scroll-area'
+import { AgGridReact } from 'ag-grid-react'
+import React, { useMemo, useState } from 'react'
+import TrailDetails from '../TrailDetails'
 
-export default function TrailsBody() {
+export default function TrailsBody({trails}) {
 
-  const TAGS = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
+  const [trailId, setTrailId] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
+
+  const columnDefs = [
+    {
+      field: 'name',
+      flex: 2,
+    },
+    {
+      field: 'distance',
+      flex: 1,
+      valueFormatter: p => p.value?p.value:'_'
+    },
+    {
+      field: 'description',
+      flex: 3,
+    }
+  ]
+
+  const defaultColDef = useMemo(() => (
+    {
+      resizable: true,
+      sortable: true,
+      // width: 170,
+      
+    }
+  ), [])
+
+  const handleRowDoubleClick = (e) => {
+    // console.log(e)
+    // console.log(e.data._id)
+    // navigate(`/buses/${e.data._id}`)
+
+    setTrailId(e.data._id)
+    setIsEditing(true)
+  }
 
   return (
-    <div className='body'>
-      <ScrollArea.Root className="ScrollAreaRoot">
-        <ScrollArea.Viewport className="ScrollAreaViewport">
-          <div style={{ padding: '15px 20px' }}>
-            <div className="Text">Trails</div>
-            {TAGS.map((tag) => (
-              <div className="Tag" key={tag}>
-                {tag}
-              </div>
-            ))}
-          </div>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical">
-          <ScrollArea.Thumb className="ScrollAreaThumb" />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal">
-          <ScrollArea.Thumb className="ScrollAreaThumb" />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Corner className="ScrollAreaCorner" />
-      </ScrollArea.Root>
+    <div id='trailPageBody' className="ag-theme-alpine" >
+      {isEditing?<TrailDetails id={trailId} isEditing={isEditing} exitEditing={setIsEditing}/>:null}
+      <AgGridReact
+        defaultColDef={defaultColDef}
+        columnDefs={columnDefs}
+        rowData={trails.filter(trail => trail._id !== '')}
+        onRowDoubleClicked={handleRowDoubleClick}
+        // onCellMouseOver={handleMouseOver}
+        animateRows={true}
+      />
     </div>
   )
 }

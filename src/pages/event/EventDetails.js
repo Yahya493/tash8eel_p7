@@ -202,6 +202,9 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
         setEvent({ ...event, buses: newBuses })
     }
 
+    const handleTrail = (e) => {
+        setEvent({ ...event, trail: e.target.value })
+    }
 
     return (
         <div className='eventDetails'>
@@ -232,6 +235,7 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
                     publishDateVald={publishDateVald}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    handleTrail={handleTrail}
                     busesVald={busesVald}
                     trailVald={trailVald}
                     setEvent={setEvent}

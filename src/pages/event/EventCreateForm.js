@@ -37,7 +37,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
             arrivalTime: '18:00',
             departureLocation: '',
             arrivalLocation: '',
-            trail: 'trail',
+            trail: '',
             buses: [''],
             numberOfPerson: 30,
             duration: 60,
@@ -194,6 +194,10 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
         setNewEvent({ ...newEvent, buses: newBuses })
     }
 
+    const handleTrail = (e) => {
+        setNewEvent({ ...newEvent, trail: e.target.value })
+    }
+
 
     return (
         <div className='eventCreateForm'>
@@ -224,6 +228,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
                     publishDateVald={publishDateVald}
                     handleDescription={handleDescription}
                     handleBuses={handleBuses}
+                    handleTrail={handleTrail}
                     busesVald={busesVald}
                     trailVald={trailVald}
                     setEvent={setNewEvent}

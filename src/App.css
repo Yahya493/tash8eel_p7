@@ -96,7 +96,8 @@ input[type='file'] {
 .inputValidation {
     color: red;
     font-size: 12px;
-    margin-block: -3px;
+    margin-top: -3px;
+    margin-bottom: -2px;
 }
 
 .eventDetailsBody,
@@ -119,6 +120,29 @@ input[type='file'] {
     flex-direction: row;
     background-color: var(--primary_color);
     height: 210px;
+}
+
+.trailDetailsBody,
+.trailCreateBody
+{
+    padding-block: 20px;
+    padding-inline: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary_color);
+    height: 150px;
+}
+
+.trailDetailsBody input,
+.trailCreateBody input
+{
+    width: 100%;
+}
+
+.trailDetailsBody textarea,
+.trailCreateBody textarea {
+    width: 100%;
+    height: 60px;
 }
 
 .eventDetailsBody table,
@@ -155,7 +179,10 @@ input[type='file'] {
 .eventCreateBody textarea,
 .busDetailsBody input,
 .busDetailsBody select,
-.busDetailsBody textarea
+.busDetailsBody textarea,
+.trailDetailsBody input,
+.trailDetailsBody select,
+.trailDetailsBody textarea
 {
     padding-block: 5px;
     border: 1px solid grey;
@@ -177,7 +204,8 @@ input[type='file'] {
 .eventDetailsBody label,
 .eventCreateBody label,
 .busDetailsBody label,
-.busCreateBody label
+.busCreateBody label,
+.trailDetailsBody
 {
     font-weight: bold;
 }
@@ -245,4 +273,11 @@ input[type='file'] {
     margin: 25vh auto;
     border: 3px solid var(--secondery_color);
 
+}
+
+.trailModal 
+{
+    width: 50%;
+    margin: 25vh auto;
+    border: 3px solid var(--secondery_color);
 }

@@ -3,6 +3,7 @@ const initState = {
     logedIn: false,
     buses: [],
     events: [],
+    trails: [],
     drivers: [{name:'', phone:''}],
 }
 
@@ -19,6 +20,9 @@ const rootReducer = (state = initState, action) => {
             break
         case 'setEvents':
             state = { ...state, events: action.events }
+            break
+        case 'setTrails':
+            state = { ...state, trails: action.trails }
             break
         default:
             break
