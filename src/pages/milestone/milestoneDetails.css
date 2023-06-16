@@ -1,0 +1,58 @@
+.milestoneDetailsBody {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    padding-inline: 20px;
+    padding-block: 20px;
+    background-color: var(--primary_color);
+    height: 400px;
+}
+
+.milestoneDetailsBody .galleryCard {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* margin-block: 10px; */
+}
+
+.milestoneDetailsBody button {
+    display: block;
+    margin: 10px auto;
+    /* margin-block: 10px; */
+}
+
+.milestoneDetailsBody div {
+    flex: 1;
+}
+
+.milestoneDetailsBody input
+{
+    width: 100%;
+}
+
+.milestoneDetailsBody textarea
+{
+    width: 100%;
+    height:253px;
+}
+/* #milestoneDetailsBody label {
+    font-weight: bold;
+}
+
+#milestoneDetailsBody td {
+    padding-block: 5px;
+} */
+
+.milestoneDetailsBody .image-gallery-slide {
+    height: 260px;
+    background-color: black;
+    /* max-height: 300px; */
+    /* max-width: 100%; */
+}
+
+.milestoneDetailsBody .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

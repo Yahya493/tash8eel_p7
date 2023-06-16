@@ -4,7 +4,8 @@ const initState = {
     buses: [],
     events: [],
     trails: [],
-    drivers: [{name:'', phone:''}],
+    // milestones: [],
+    drivers: [{ name: '', phone: '' }],
 }
 
 const rootReducer = (state = initState, action) => {
@@ -24,6 +25,9 @@ const rootReducer = (state = initState, action) => {
         case 'setTrails':
             state = { ...state, trails: action.trails }
             break
+        // case 'setMilestones':
+        //     state = { ...state, milestones: action.milestones }
+        //     break
         default:
             break
     }

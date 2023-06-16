@@ -95,6 +95,13 @@ const FilesUpload = ({ uploadTo, object, setter, photos, setPhotos}) => {
                         setUploadState('uploaded')
                         return
                     }
+                    if (uploadTo === 'milestone') {
+                        // dispatch({type: 'setEvent', events: [data, ...events.filter(event => event._id !== data._id)]})
+                        setter({ ...object, photos: [...object.photos, photo._id] })
+                        setPhotos([...photos, newImage.myFile])
+                        setUploadState('uploaded')
+                        return
+                    }
                 })
         }
         catch (error) {
@@ -129,7 +136,7 @@ const FilesUpload = ({ uploadTo, object, setter, photos, setPhotos}) => {
     return (
         <div className="filesUpload">
             <form id='file' onSubmit={handleSubmit}>
-                <h3>Photo Upload</h3>
+                <label>Photo Upload</label>
                 {/* <label htmlFor='file'>files</label> */}
                 <input
                     className='fileInput'

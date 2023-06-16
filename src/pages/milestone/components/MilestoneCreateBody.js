@@ -6,7 +6,7 @@ import emptyPhoto from '../../../components/empty-photo.jpg'
 
 
 
-export default function MilestoneDetailsBody(
+export default function MilestoneCreateBody(
   {
     milestone,
     handleName,
@@ -20,43 +20,43 @@ export default function MilestoneDetailsBody(
   const [photos, setPhotos] = useState([])
   const api = getBaseUrl()
 
-  useEffect(
-    () => {
-      for (const photoId of milestone.photos) {
-        console.log(`downloading: ${photoId}`)
-        fetch(api + '/photos', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ _id: photoId })
-        })
-          .then(res => res.json())
-          .then(photo => {
-            setPhotos(p => [...p, photo.myFile])
-            console.log(`download finished: ${photoId}`)
-          })
-      }
-    },
-    []
-  )
+  // useEffect(
+  //   () => {
+  //     for (const photoId of milestone.photos) {
+  //       console.log(`downloading: ${photoId}`)
+  //       fetch(api + '/photos', {
+  //         method: 'POST',
+  //         headers: {
+  //           "Content-Type": "application/json"
+  //         },
+  //         body: JSON.stringify({ _id: photoId })
+  //       })
+  //         .then(res => res.json())
+  //         .then(photo => {
+  //           setPhotos(p => [...p, photo.myFile])
+  //           console.log(`download finished: ${photoId}`)
+  //         })
+  //     }
+  //   },
+  //   [milestone.photos]
+  // )
 
   return (
     <div className='milestoneDetailsBody'>
       <div className='info'>
         <div >
           <label htmlFor='milestoneName'>Milestone name</label><br />
-          <input id='milestoneName' type='text' value={milestone.name} onChange={handleName} />
+          <input id='milestoneName' type='text' name='milestoneName' value={milestone.name} onChange={handleName} />
           <p className='inputValidation'>{milestoneNameVald}</p>
         </div>
         <div>
-          <label htmlFor='validTo'>Location</label><br />
-          <input id='location' type='text' value={milestone.location} onChange={handleLocation} />
+          <label htmlFor='location'>Location</label><br />
+          <input id='location' type='text' name='location' value={milestone.location} onChange={handleLocation} />
           <p className='inputValidation'>{locationVald}</p>
         </div>
         <div >
           <label htmlFor='description'>Description</label><br />
-          <textarea id='description' value={milestone.description} onChange={handleDescription} aria-multiline />
+          <textarea id='description' value={milestone.description} name='description' onChange={handleDescription} aria-multiline />
         </div>
       </div>
       <div className='galleryCard'>

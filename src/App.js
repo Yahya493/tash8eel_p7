@@ -11,6 +11,7 @@ import EventPage from './pages/event/EventPage';
 import LoginForm from './pages/login/Login';
 import NotFoundPage from './pages/notFound/NotFoundPage';
 import TrailPage from './pages/trail/TrailPage';
+import MilestonesPage from './pages/milestone/MilestonesPage';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path='/events' element={<EventPage />} />
           <Route path='/buses' element={<BusPage />} />
           <Route path='/trails' element={<TrailPage />} />
+          <Route path='/milestones' element={<MilestonesPage />} />
 
           <Route path='*' element={<NotFoundPage />} />
         </Routes>

@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
-import { deleteMilestone, getMilestoneById, updateMilestone } from '../../actions/actions'
+import { saveMilestone } from '../../actions/actions'
+import MilestoneCreateHeader from './components/MilestoneCreateHeader'
 import MilestoneDetailsBody from './components/MilestoneDetailsBody'
-import MilestoneDetailsHeader from './components/MilestoneDetailsHeader'
 import './milestoneDetails.css'
+import MilestoneCreateBody from './components/MilestoneCreateBody'
 
 ReactModal.setAppElement('#root');
 
-export default function MilestoneDetails({ id, isEditing, exitEditing, milestones, setMilestones }) {
+export default function MilestoneCreateForm({trailId, isAdding, exitAdding, milestones, setMilestones }) {
   const [milestone, setMilestone] = useState({photos: []})
   // const dispatch = useDispatch()
 
   const [milestoneNameVald, setMilestoneNameVal] = useState('*')
   const [locationVald, setLocationVal] = useState('*')
 
+  const resetValues = () => {
+    setMilestone({
+      name: '',
+      location: '',
+      trail: trailId,
+      description: ''
+    })
+  }
 
   const closeModal = () => {
-    exitEditing(false)
+    exitAdding(false)
   };
 
   useEffect(() => {
-    getMilestoneById(id, setMilestone)
+    resetValues()
   }, [])
 
-  const handleDelete = () => {
-    deleteMilestone(milestone, milestones, setMilestones, closeModal)
+  const handleReset = () => {
+    resetValues()
   }
 
   const checkMilestoneForm = () => {
@@ -45,10 +54,10 @@ export default function MilestoneDetails({ id, isEditing, exitEditing, milestone
     return valide
   }
 
-  const handleUpdate = () => {
+  const handleSave = () => {
     if (!checkMilestoneForm()) return
 
-    updateMilestone(milestone, milestones, setMilestones, closeModal)
+    saveMilestone(milestone, milestones, setMilestones, closeModal)
   }
 
   const handleName = (e) => {
@@ -65,9 +74,9 @@ export default function MilestoneDetails({ id, isEditing, exitEditing, milestone
 
   return (
     <div className='milestoneDetails'>
-      <ReactModal isOpen={isEditing} onRequestClose={closeModal} className='milestoneModal' shouldCloseOnOverlayClick={false}>
-        <MilestoneDetailsHeader handleUpdate={handleUpdate} handleDelete={handleDelete} handleCancel={closeModal} />
-        <MilestoneDetailsBody
+      <ReactModal isOpen={isAdding} onRequestClose={closeModal} className='milestoneModal' shouldCloseOnOverlayClick={false}>
+        <MilestoneCreateHeader handleSave={handleSave} handleReset={handleReset} handleCancel={closeModal} />
+        <MilestoneCreateBody
           milestone={milestone}
           handleName={handleName}
           handleLocation={handleLocation}

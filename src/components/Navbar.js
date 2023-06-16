@@ -43,6 +43,7 @@ const Navbar = () => {
           <li><Link to="/events">Events</Link></li>
           <li><Link to="/buses">Buses</Link></li>
           <li><Link to="/trails">Trails</Link></li>
+          <li><Link to="/milestones">Milestones</Link></li>
         </ul>
 
         <button type="button" className='logOut' onClick={handleLogOut}>

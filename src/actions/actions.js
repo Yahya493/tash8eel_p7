@@ -360,6 +360,97 @@ const saveTrail = (dispatch, trail, trails, closeModal) => {
         })
 }
 
+//
+const getMilestones = (setMilestones, trailId) => {
+    const api = `${getBaseUrl()}/milestones`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ trail: trailId })
+    })
+        .then(res => res.json())
+        .then(milestones => {
+            milestones = [{ _id: '', name: '__Select__', photos: [], trail: '', description: '' }, ...milestones]
+            // dispatch({ type: 'setMilestones', milestones: milestones })
+            setMilestones(milestones)
+        })
+        .catch(error => console.error("Error: " + error))
+}
+
+const getMilestoneById = (milestoneId, setMilestone) => {
+    const api = `${getBaseUrl()}/milestones`
+    fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ _id: milestoneId })
+    })
+        .then(res => res.json())
+        .then(milestone => {
+            setMilestone(milestone)
+        })
+        .catch(error => console.error("Error: " + error))
+}
+
+const deleteMilestone = ( milestone, milestones, setMilestone,  closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/deleteMilestone`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({_id: milestone._id})
+    })
+        .then(res => res.json())
+        .then(deletedMilestone => {
+            // dispatch({ type: 'setMilestones', milestones: milestones.filter(milestones => milestones._id !== milestone._id) })
+            setMilestone(milestones.filter(milestones => milestones._id !== milestone._id))
+            console.log(`${deletedMilestone.data.name}: ${deletedMilestone.status}`)
+            closeModal()
+        })
+}
+
+const updateMilestone = (milestone, milestones, setMilestones, closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/updateMilestone`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(milestone)
+        })
+        .then(res => res.json())
+        .then(updatedMilestone => {
+            // dispatch({ type: 'setMilestones', milestones: [updatedMilestone, ...milestones.filter(milestone => milestone._id !== updatedMilestone._id)]})
+            setMilestones([updatedMilestone, ...milestones.filter(milestone => milestone._id !== updatedMilestone._id)])
+            console.log(`Milestone: ${updatedMilestone.name} has been updated`)
+            closeModal()
+        })
+}
+
+const saveMilestone = (milestone, milestones, setMilestones, closeModal) => {
+    const api = getBaseUrl()
+    fetch(api + `/insertMilestone`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(milestone)
+        })
+        .then(res => res.json())
+        .then(savedMilestone => {
+            // dispatch({ type: 'setMilestones', milestones: [savedMilestone, ...milestones] })
+            setMilestones([savedMilestone, ...milestones])
+            console.log(`Milestone: ${savedMilestone.name} has been saved`)
+            closeModal()
+        })
+}
+
 export {
     getEvents,
     getBuses,
@@ -378,4 +469,9 @@ export {
     deleteTrail,
     updateTrail,
     saveTrail,
+    getMilestones,
+    getMilestoneById,
+    updateMilestone,
+    saveMilestone,
+    deleteMilestone,
 }

@@ -1,0 +1,11 @@
+
+
+#milestoneTrailSelect {
+    margin-right: 0 auto;
+}
+
+#milestoneTrailSelect label{
+    font-weight: bolder;
+    color: var(--secondery_color)
+}
+
