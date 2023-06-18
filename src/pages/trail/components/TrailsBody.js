@@ -15,7 +15,21 @@ export default function TrailsBody({trails}) {
     {
       field: 'distance',
       flex: 1,
-      valueFormatter: p => p.value?p.value:'_'
+      valueFormatter: p => p.value + ' km'
+    },
+    {
+      field: 'minHeight',
+      flex: 1,
+      valueFormatter: p => p.value + ' m'
+    },
+    {
+      field: 'maxHeight',
+      flex: 1,
+      valueFormatter: p => p.value + ' m'
+    },
+    {
+      field: 'difficulty',
+      flex: 1
     },
     {
       field: 'description',

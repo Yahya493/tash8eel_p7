@@ -33,6 +33,14 @@ export default function MilestonesPage() {
     [trailId]
   )
 
+  const hasStart = (milestone) => {
+    return milestones.filter(m => m._id !== milestone._id && m.type === 'Start').length >= 1
+  }
+
+  const hasEnd = (milestone) => {
+    return milestones.filter(m => m._id !== milestone._id && m.type === 'End').length >= 1
+  }
+
   const handleTrail = (e) => {
     setMilestones([])
     setTrailId(e.target.value)
@@ -77,8 +85,15 @@ export default function MilestonesPage() {
         milestones={milestones}
         setMilestones={setMilestones}
         trailId={trailId}
+        hasStart={hasStart}
+        hasEnd={hasEnd}
       /> : null}
-      <MilestonesBody milestones={milestones.filter(milestone => contains(milestone, query))} setMilestones={setMilestones}/>
+      <MilestonesBody 
+        milestones={milestones.filter(milestone => contains(milestone, query))} 
+        setMilestones={setMilestones}
+        hasStart={hasStart}
+        hasEnd={hasEnd}
+      />
     </div>
   )
 }

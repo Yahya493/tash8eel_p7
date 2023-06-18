@@ -25,64 +25,80 @@ export default function EventPageBody({ events }) {
     {
       headerName: 'Event Name',
       field: 'name',
+      width: 300,
       pinned: true
     },
     {
       field: 'validFrom',
+      width: 120,
       valueFormatter: dateFormatter,
     },
     {
       field: 'validTo',
+      width: 120,
       valueFormatter: dateFormatter,
     },
     {
       field: 'departureTime',
+      width: 140,
       valueFormatter: timeFormatter,
     },
     {
       field: 'arrivalTime',
+      width: 120,
       valueFormatter: timeFormatter,
     },
     {
       field: 'departureLocation',
+      width: 300
     },
     {
       field: 'arrivalLocation',
+      width: 300,
     },
     {
       field: 'duration',
-      valueFormatter: p => p.value + ' min'
+      width: 100,
+      valueFormatter: p => p.value + ' h'
     },
     {
+      headerName: 'Nb Of Person',
       field: 'numberOfPerson',
+      width: 130
     },
     {
       field: 'fees',
+      width: 70,
+      valueFormatter: p => p.value + '$'
     },
     {
       field: 'buses',
+      hide: true,
       valueFormatter: p => p.value.length,
       tooltipValueGetter: p => p.value
     },
     {
       field: 'photos',
+      hide: true,
       valueFormatter: p => p.value.length,
     },
     {
       field: 'publishDate',
+      width: 120,
       valueFormatter: dateFormatter,
     },
     {
       field: 'description',
+      width: 600,
       tooltipValueGetter: p => p.value
     },
   ]
 
   const defaultColDef = useMemo(() => (
     {
-      // resizable: true,
+      resizable: true,
       sortable: true,
-      width: 170,
+      // width: 120,
     }
   ), [])
 

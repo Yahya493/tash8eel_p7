@@ -53,6 +53,7 @@ export default function EventDetailsBody(
 
     useEffect(
         () => {
+            if (photos.length > 0) return
             for (const photoId of event.photos) {
                 console.log(`downloading: ${photoId}`)
                 fetch(api + '/photos', {

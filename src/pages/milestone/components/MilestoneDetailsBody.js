@@ -12,9 +12,11 @@ export default function MilestoneDetailsBody(
     handleName,
     handleDescription,
     handleLocation,
+    handleType,
     milestoneNameVald,
     locationVald,
-    setMilestone
+    setMilestone,
+    typeVald,
   }) {
 
   const [photos, setPhotos] = useState([])
@@ -22,6 +24,7 @@ export default function MilestoneDetailsBody(
 
   useEffect(
     () => {
+      if (photos.length > 0) return
       for (const photoId of milestone.photos) {
         console.log(`downloading: ${photoId}`)
         fetch(api + '/photos', {
@@ -38,7 +41,7 @@ export default function MilestoneDetailsBody(
           })
       }
     },
-    []
+    [milestone.photos]
   )
 
   return (
@@ -50,10 +53,26 @@ export default function MilestoneDetailsBody(
           <p className='inputValidation'>{milestoneNameVald}</p>
         </div>
         <div>
-          <label htmlFor='validTo'>Location</label><br />
+          <label htmlFor='location'>Location</label><br />
           <input id='location' type='text' value={milestone.location} onChange={handleLocation} />
           <p className='inputValidation'>{locationVald}</p>
         </div>
+        <label>Type</label>
+        <div id='type'>
+          <div>
+            <input id='radio1' type='radio' name='type' value='Start' checked={milestone.type === 'Start'} onChange={handleType} />
+            <label htmlFor='radio1'>Start</label>
+          </div>
+          <div>
+            <input id='radio3' type='radio' name='type' value='End' checked={milestone.type === 'End'} onChange={handleType} />
+            <label htmlFor='radio3'>End</label>
+          </div>
+          <div>
+            <input id='radio2' type='radio' name='type' value='On The Trail' checked={milestone.type === 'On The Trail'} onChange={handleType} />
+            <label htmlFor='radio2'>On The Trail</label>
+          </div>
+        </div>
+        <p className='inputValidation'>{typeVald}</p>
         <div >
           <label htmlFor='description'>Description</label><br />
           <textarea id='description' value={milestone.description} onChange={handleDescription} aria-multiline />

@@ -14,6 +14,9 @@ export default function TrailDetails({ id, isEditing, exitEditing }) {
     const dispatch = useDispatch()
 
     const [trailNameVald, setTrailNameVal] = useState('*')
+    const [distanceVald, setDistanceVald] = useState('*')
+    const [minHeightVald, setMinHeightVald] = useState('*')
+    const [maxHeightVald, setMaxHeightVald] = useState('*')
 
     const closeModal = () => {
         exitEditing(false)
@@ -29,10 +32,33 @@ export default function TrailDetails({ id, isEditing, exitEditing }) {
 
     const checkTrailForm = () => {
         setTrailNameVal('*')
+        setDistanceVald('*')
+        setMinHeightVald('*')
+        setMaxHeightVald('*')
         let valide = true
 
         if (trail.name === '') {
             setTrailNameVal('required')
+            valide = false
+        }
+
+        if (trail.distance <= 0) {
+            setDistanceVald('required')
+            valide = false
+        }
+
+        if (trail.minHeight < 0) {
+            setMinHeightVald('required')
+            valide = false
+        }
+
+        if (trail.maxHeight <= 0) {
+            setMaxHeightVald('required')
+            valide = false
+        }
+
+        if (trail.maxHeight < trail.minHeight) {
+            setMaxHeightVald("Can't be less than min height")
             valide = false
         }
 
@@ -49,6 +75,22 @@ export default function TrailDetails({ id, isEditing, exitEditing }) {
         setTrail({ ...trail, name: e.target.value })
     }
 
+    const handleDifficulty = (e) => {
+        setTrail({ ...trail, difficulty: e.target.value })
+    }
+
+    const handleDistance = (e) => {
+        setTrail({ ...trail, distance: e.target.value })
+    }
+
+    const handleMinHeight = (e) => {
+        setTrail({ ...trail, minHeight: e.target.value })
+    }
+
+    const handleMaxHeight = (e) => {
+        setTrail({ ...trail, maxHeight: e.target.value })
+    }
+
     const handleDescription = (e) => {
         setTrail({ ...trail, description: e.target.value })
     }
@@ -60,8 +102,15 @@ export default function TrailDetails({ id, isEditing, exitEditing }) {
                 <TrailDetailsBody
                     trail={trail}
                     handleName={handleName}
+                    handleDifficulty={handleDifficulty}
+                    handleDistance={handleDistance}
+                    handleMinHeight={handleMinHeight}
+                    handleMaxHeight={handleMaxHeight}
                     handleDescription={handleDescription}
                     trailNameVald={trailNameVald}
+                    distanceVald={distanceVald}
+                    minHeightVald={minHeightVald}
+                    maxHeightVald={maxHeightVald}
                 />
             </ReactModal>
         </div>

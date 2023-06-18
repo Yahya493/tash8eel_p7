@@ -1,4 +1,4 @@
-#trailDetailsBody {
+/* #trailDetailsBody {
     padding-inline: 10px;
 }
 
@@ -8,5 +8,23 @@
 
 #trailDetailsBody td {
     padding-block: 5px;
+} */
+
+.trailDetailsBody #firstRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
+#trailName {
+    min-width: 420px;
+}
+
+.trailDetailsBody #secondRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.trailDetailsBody #secondRow .separator{
+    width: 20px;
+}

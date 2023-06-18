@@ -5,7 +5,7 @@
     padding-inline: 20px;
     padding-block: 20px;
     background-color: var(--primary_color);
-    height: 400px;
+    height: fit-content;
 }
 
 .milestoneDetailsBody .galleryCard {
@@ -34,7 +34,7 @@
 .milestoneDetailsBody textarea
 {
     width: 100%;
-    height:253px;
+    height:200px;
 }
 /* #milestoneDetailsBody label {
     font-weight: bold;
@@ -56,3 +56,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.milestoneDetailsBody #type {
+    display: flex;
+    flex-direction: row;
+    margin-block: 5PX;
+}
+
+.milestoneDetailsBody #type input {
+    /* margin: 0; */
+    position: relative;
+    top: 2px;
+    width: fit-content;
+    margin-right: 5px;
+}
+
+/* .milestoneDetailsBody #type div {
+    display: flex;
+    flex-direction: row;
+} */

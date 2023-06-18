@@ -40,7 +40,7 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
             trail: '',
             buses: [''],
             numberOfPerson: 30,
-            duration: 60,
+            duration: 1,
             photos: [],
             fees: 15,
             publishDate: currentDate,

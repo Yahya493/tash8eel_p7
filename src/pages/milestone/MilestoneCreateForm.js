@@ -8,17 +8,19 @@ import MilestoneCreateBody from './components/MilestoneCreateBody'
 
 ReactModal.setAppElement('#root');
 
-export default function MilestoneCreateForm({trailId, isAdding, exitAdding, milestones, setMilestones }) {
+export default function MilestoneCreateForm({trailId, isAdding, exitAdding, milestones, setMilestones , hasStart, hasEnd}) {
   const [milestone, setMilestone] = useState({photos: []})
   // const dispatch = useDispatch()
 
   const [milestoneNameVald, setMilestoneNameVal] = useState('*')
   const [locationVald, setLocationVal] = useState('*')
+  const [typeVald, setTypeVal] = useState('*')
 
   const resetValues = () => {
     setMilestone({
       name: '',
       location: '',
+      type: 'On The Trail',
       trail: trailId,
       description: ''
     })
@@ -39,6 +41,7 @@ export default function MilestoneCreateForm({trailId, isAdding, exitAdding, mile
   const checkMilestoneForm = () => {
     setMilestoneNameVal('*')
     setLocationVal('*')
+    setTypeVal('*')
     let valide = true
 
     if (milestone.name === '') {
@@ -48,6 +51,16 @@ export default function MilestoneCreateForm({trailId, isAdding, exitAdding, mile
 
     if (milestone.location === '') {
       setLocationVal('required')
+      valide = false
+    }
+
+    if(hasStart(milestone) && milestone.type === 'Start' ) {
+      setTypeVal("Already has a Start")
+      valide = false
+    }
+
+    if(hasEnd(milestone) && milestone.type === 'End' ) {
+      setTypeVal("Already has an End")
       valide = false
     }
 
@@ -68,6 +81,10 @@ export default function MilestoneCreateForm({trailId, isAdding, exitAdding, mile
     setMilestone({ ...milestone, location: e.target.value })
   }
 
+  const handleType = (e) => {
+    setMilestone({ ...milestone, type: e.target.value })
+  }
+
   const handleDescription = (e) => {
     setMilestone({ ...milestone, description: e.target.value })
   }
@@ -80,9 +97,11 @@ export default function MilestoneCreateForm({trailId, isAdding, exitAdding, mile
           milestone={milestone}
           handleName={handleName}
           handleLocation={handleLocation}
+          handleType={handleType}
           handleDescription={handleDescription}
           milestoneNameVald={milestoneNameVald}
           locationVald={locationVald}
+          typeVald={typeVald}
           setMilestone={setMilestone}
         />
       </ReactModal>

@@ -10,11 +10,13 @@ export default function MilestoneCreateBody(
   {
     milestone,
     handleName,
+    handleType,
     handleDescription,
     handleLocation,
     milestoneNameVald,
     locationVald,
-    setMilestone
+    typeVald,
+    setMilestone,
   }) {
 
   const [photos, setPhotos] = useState([])
@@ -54,6 +56,22 @@ export default function MilestoneCreateBody(
           <input id='location' type='text' name='location' value={milestone.location} onChange={handleLocation} />
           <p className='inputValidation'>{locationVald}</p>
         </div>
+        <label >Type</label>
+        <div id='type' value='End'>
+          <div>
+            <input id='radio1' type='radio' name='type' value='Start' checked={milestone.type === 'Start'} onChange={handleType}/>
+            <label htmlFor='radio1'>Start</label>
+          </div>
+          <div>
+            <input id='radio3' type='radio' name='type' value='End' checked={milestone.type === 'End'} onChange={handleType}/>
+            <label htmlFor='radio3'>End</label>
+          </div>
+          <div>
+            <input id='radio2' type='radio' name='type' value='On The Trail' checked={milestone.type === 'On The Trail'} onChange={handleType}/>
+            <label htmlFor='radio2'>On The Trail</label>
+          </div>
+        </div>
+        <p className='inputValidation'>{typeVald}</p>
         <div >
           <label htmlFor='description'>Description</label><br />
           <textarea id='description' value={milestone.description} name='description' onChange={handleDescription} aria-multiline />

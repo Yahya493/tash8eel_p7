@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useState } from 'react'
 import MilestoneDetails from '../MilestoneDetails'
 
-export default function MilestonesBody({milestones , setMilestones}) {
+export default function MilestonesBody({ milestones, setMilestones, hasStart, hasEnd }) {
 
   const [milestoneId, setMilestoneId] = useState('')
   const [isEditing, setIsEditing] = useState(false)
@@ -15,17 +15,22 @@ export default function MilestonesBody({milestones , setMilestones}) {
       flex: 2,
     },
     {
-      field: 'location',
+      field: 'type',
       flex: 1
     },
     {
+      field: 'location',
+      flex: 2
+    },
+    {
       field: 'photos',
+      hide: true,
       flex: 1,
       valueFormatter: p => p.value.length
     },
     {
       field: 'description',
-      flex: 3,
+      flex: 4,
     }
   ]
 
@@ -34,7 +39,7 @@ export default function MilestonesBody({milestones , setMilestones}) {
       resizable: true,
       sortable: true,
       // width: 170,
-      
+
     }
   ), [])
 
@@ -49,7 +54,17 @@ export default function MilestonesBody({milestones , setMilestones}) {
 
   return (
     <div id='milestonePageBody' className="ag-theme-alpine" >
-      {isEditing?<MilestoneDetails id={milestoneId} isEditing={isEditing} milestones={milestones} setMilestones={setMilestones} exitEditing={setIsEditing}/>:null}
+      {isEditing ?
+        <MilestoneDetails
+          id={milestoneId}
+          isEditing={isEditing}
+          milestones={milestones}
+          setMilestones={setMilestones}
+          exitEditing={setIsEditing}
+          hasStart={hasStart}
+          hasEnd={hasEnd}
+        /> :
+        null}
       <AgGridReact
         defaultColDef={defaultColDef}
         columnDefs={columnDefs}

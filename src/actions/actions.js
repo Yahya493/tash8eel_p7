@@ -78,6 +78,10 @@ const deleteEvent = (dispatch, event, events, closeModal) => {
     })
         .then(res => res.json())
         .then(deletedEvent => {
+            if (deletedEvent.status !== 'deleted') {
+                console.log(`${event.name}: ${deletedEvent.status}`)
+                return
+            }
             dispatch({ type: 'setEvents', events: events.filter(events => events._id !== event._id) })
             console.log(`${deletedEvent.data.name}: ${deletedEvent.status}`)
             closeModal()
@@ -171,6 +175,10 @@ const deleteBus = (dispatch, bus, buses, drivers, closeModal) => {
                 })
                     .then(res => res.json())
                     .then(deletedDriver => {
+                        if (deletedDriver.status !== 'deleted') {
+                            // console.log(`${busInit.driver.name}: ${deletedDriver.status}`)
+                            return
+                        }
                         dispatch({ type: 'setDrivers', drivers: drivers.filter(driver => driver._id !== deletedDriver.data._id) })
                         console.log(`${deletedDriver.data.name}: ${deletedDriver.status}`)
                     })
@@ -183,6 +191,10 @@ const deleteBus = (dispatch, bus, buses, drivers, closeModal) => {
             })
                 .then(res => res.json())
                 .then(deletedBus => {
+                    if (deletedBus.status !== 'deleted') {
+                        // console.log(`${trail.name}: ${deletedBus.status}`)
+                        return
+                    }
                     dispatch({ type: 'setBuses', buses: buses.filter(buses => buses._id !== deletedBus.data._id) })
                     console.log(`${deletedBus.data.name}: ${deletedBus.status}`)
                     // dispatch({type:'update'})
@@ -314,10 +326,14 @@ const deleteTrail = (dispatch, trail, trails, closeModal) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({_id: trail._id})
+        body: JSON.stringify({ _id: trail._id })
     })
         .then(res => res.json())
         .then(deletedTrail => {
+            if (deletedTrail.status !== 'deleted') {
+                console.log(`${trail.name}: ${deletedTrail.status}`)
+                return
+            }
             dispatch({ type: 'setTrails', trails: trails.filter(trails => trails._id !== trail._id) })
             console.log(`${deletedTrail.data.name}: ${deletedTrail.status}`)
             closeModal()
@@ -336,7 +352,7 @@ const updateTrail = (dispatch, trail, trails, closeModal) => {
         })
         .then(res => res.json())
         .then(updatedTrail => {
-            dispatch({ type: 'setTrails', trails: [updatedTrail, ...trails.filter(trail => trail._id !== updatedTrail._id)]})
+            dispatch({ type: 'setTrails', trails: [updatedTrail, ...trails.filter(trail => trail._id !== updatedTrail._id)] })
             console.log(`Trail: ${updatedTrail.name} has been updated`)
             closeModal()
         })
@@ -395,17 +411,21 @@ const getMilestoneById = (milestoneId, setMilestone) => {
         .catch(error => console.error("Error: " + error))
 }
 
-const deleteMilestone = ( milestone, milestones, setMilestone,  closeModal) => {
+const deleteMilestone = (milestone, milestones, setMilestone, closeModal) => {
     const api = getBaseUrl()
     fetch(api + `/deleteMilestone`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({_id: milestone._id})
+        body: JSON.stringify({ _id: milestone._id })
     })
         .then(res => res.json())
         .then(deletedMilestone => {
+            if (deletedMilestone.status !== 'deleted') {
+                console.log(`${milestone.name}: ${deletedMilestone.status}`)
+                return
+            }
             // dispatch({ type: 'setMilestones', milestones: milestones.filter(milestones => milestones._id !== milestone._id) })
             setMilestone(milestones.filter(milestones => milestones._id !== milestone._id))
             console.log(`${deletedMilestone.data.name}: ${deletedMilestone.status}`)
