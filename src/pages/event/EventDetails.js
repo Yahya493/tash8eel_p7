@@ -78,24 +78,24 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
         setBusesVald('*')
 
         let valide = true
-        const today = new Date().toISOString().split('T')[0]
+        // const today = new Date().toISOString().split('T')[0]
 
         if(event.name === '') {
             setNameVald('required')
             valide = false
         }
-        if(event.validFrom < today) {
-            setValidFromVald("Can't be less than today")
-            valide = false
-        }
+        // if(event.validFrom < today) {
+        //     setValidFromVald("Can't be less than today")
+        //     valide = false
+        // }
         if(event.validTo < event.validFrom) {
             setValidToVald("Can't be less than valide from")
             valide = false
         }
-        if(event.publishDate < today) {
-            setPublishDateVald("Can't be less than today")
-            valide = false
-        }
+        // if(event.publishDate < today) {
+        //     setPublishDateVald("Can't be less than today")
+        //     valide = false
+        // }
         if(event.departureLocation === '') {
             setDepartureLocationVald('required')
             valide = false

@@ -370,7 +370,7 @@ const saveTrail = (dispatch, trail, trails, closeModal) => {
         })
         .then(res => res.json())
         .then(savedTrail => {
-            dispatch({ type: 'setTrails', trails: [savedTrail, ...trails] })
+            dispatch({ type: 'setTrails', trails: [...trails, savedTrail] })
             console.log(`Trail: ${savedTrail.name} has been saved`)
             closeModal()
         })
