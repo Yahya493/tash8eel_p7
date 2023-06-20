@@ -211,7 +211,7 @@ export default function EventDetailsBody(
                                         image = photo.myFile
                                         break
                                     case 1:
-                                        image = require('../../../components/istockphoto.jpg')
+                                        image = require('../../../components/ben-redblock-loading.gif')
                                         break
                                     case 0:
                                     default:
