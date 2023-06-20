@@ -6,7 +6,7 @@ import { useState } from 'react'
 import emptyPhoto from '../../../components/empty-photo.jpg'
 import { getBaseUrl } from '../../../actions/urlService'
 import Cookies from 'js-cookie'
-import { getTrails } from '../../../actions/actions'
+import { getPhotoById, getTrails } from '../../../actions/actions'
 
 
 
@@ -39,11 +39,11 @@ export default function EventDetailsBody(
     }) {
 
     const buses = useSelector(state => state.buses)
-    const [photos, setPhotos] = useState([])
-    const api = getBaseUrl()
+    const [photos, setPhotos] = useState([{ _id: '', myFile: '' }])
     const trails = useSelector(state => state.trails)
     const dispatch = useDispatch()
     const user = Cookies.get('user')
+    const [galleryIndex, setGalleryIndex] = useState(0)
 
     useEffect(() => {
         if (trails.length === 0) {
@@ -51,23 +51,28 @@ export default function EventDetailsBody(
         }
     }, [])
 
+    // useEffect(
+    //     () => {
+    //         if (photos.length === 0) {
+    //             for (const photoId of event.photos) {
+    //                 getPhotoById(photoId, setPhotos)
+    //             }
+    //         }
+    //     },
+    //     [event.photos]
+    // )
+
     useEffect(
         () => {
-            if (photos.length > 0) return
-            for (const photoId of event.photos) {
-                console.log(`downloading: ${photoId}`)
-                fetch(api + '/photos', {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ _id: photoId })
-                })
-                    .then(res => res.json())
-                    .then(photo => {
-                        setPhotos(p => [...p, photo.myFile])
-                        console.log(`download finished: ${photoId}`)
-                    })
+            setPhotos(event.photos.map(p => {
+                return {
+                    _id: p,
+                    downloadState: 0,
+                    myFile: ''
+                }
+            }))
+            if (event.photos.length > 0) {
+                getPhotoById(event.photos[0], photos, setPhotos)
             }
         },
         [event.photos]
@@ -182,7 +187,7 @@ export default function EventDetailsBody(
             </table>
             <div className='galleryCard'>
                 <FilesUpload uploadTo='event' object={event} setter={setEvent} photos={photos} setPhotos={setPhotos} />
-                <ReactImageGallery items={(photos.length === 0) ?
+                {/* <ReactImageGallery items={(photos.length === 0) ?
                     [{
                         original: emptyPhoto,
                     }]
@@ -191,7 +196,40 @@ export default function EventDetailsBody(
                         return {
                             original: photo,
                         }
-                    })} autoPlay />
+                    })} autoPlay /> */}
+                <ReactImageGallery
+                    items={
+                        (photos.length === 0) ?
+                            [{
+                                original: emptyPhoto,
+                            }]
+                            :
+                            photos.map(photo => {
+                                let image = emptyPhoto
+                                switch (photo.downloadState) {
+                                    case 2:
+                                        image = photo.myFile
+                                        break
+                                    case 1:
+                                        image = require('../../../components/istockphoto.jpg')
+                                        break
+                                    case 0:
+                                    default:
+                                        image = emptyPhoto
+                                        break
+                                }
+                                return {
+                                    original: image
+                                }
+                            })
+                    }
+                    startIndex={galleryIndex}
+                    onSlide={(index) => {
+                        // console.log(index)
+                        setGalleryIndex(index)
+                        getPhotoById(event.photos[index], photos, setPhotos)
+                    }}
+                />
             </div>
         </div>
     )

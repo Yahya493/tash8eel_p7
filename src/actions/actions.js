@@ -297,7 +297,13 @@ const getTrails = (dispatch, userId) => {
     })
         .then(res => res.json())
         .then(trails => {
-            trails = [{ _id: '', name: '__Select__', distance: '', user: '', description: '' }, ...trails]
+            trails = [
+                {
+                    _id: '', name: '__Select__', distance: '',
+                    minHeight: 0, maxHeight: 0, difficulty: '', user: '', description: ''
+                },
+                ...trails
+            ]
             dispatch({ type: 'setTrails', trails: trails })
         })
         .catch(error => console.error("Error: " + error))
@@ -471,6 +477,26 @@ const saveMilestone = (milestone, milestones, setMilestones, closeModal) => {
         })
 }
 
+const getPhotoById = (photoId, photos, setPhotos) => {
+    if(photos.find(p => p._id === photoId && p.downloadState !== 0 )) return
+    setPhotos(p => p.map(p1 => p1._id === photoId?{...p1, downloadState: 1}:p1))
+    const api = getBaseUrl()
+    console.log(`downloading: ${photoId}`)
+    fetch(api + '/photos', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ _id: photoId })
+    })
+        .then(res => res.json())
+        .then(photo => {
+            // setPhotos(p => [...p.filter(p1 => p1._id !== photoId), photo])
+            setPhotos(p => p.map(p1 => p1._id === photoId?{...photo, downloadState: 2}:p1))
+            console.log(`download finished: ${photoId}`)
+        }).catch(error => console.error(error))
+}
+
 export {
     getEvents,
     getBuses,
@@ -494,4 +520,5 @@ export {
     updateMilestone,
     saveMilestone,
     deleteMilestone,
+    getPhotoById,
 }
