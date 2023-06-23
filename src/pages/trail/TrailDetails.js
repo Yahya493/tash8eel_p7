@@ -80,15 +80,15 @@ export default function TrailDetails({ id, isEditing, exitEditing }) {
     }
 
     const handleDistance = (e) => {
-        setTrail({ ...trail, distance: e.target.value })
+        setTrail({ ...trail, distance: +e.target.value })
     }
 
     const handleMinHeight = (e) => {
-        setTrail({ ...trail, minHeight: e.target.value })
+        setTrail({ ...trail, minHeight: +e.target.value })
     }
 
     const handleMaxHeight = (e) => {
-        setTrail({ ...trail, maxHeight: e.target.value })
+        setTrail({ ...trail, maxHeight: +e.target.value })
     }
 
     const handleDescription = (e) => {

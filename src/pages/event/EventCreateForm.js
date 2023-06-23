@@ -122,22 +122,6 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
         if (!chechForm()) return
 
         saveEvent(dispatch, eventDataToSave(), events, closeModal)
-        // console.log(eventDataToSave())
-        // const api = getBaseUrl()
-        // fetch(api + `/insertEvent`,
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(eventDataToSave())
-        //     })
-        //     .then(res => res.json())
-        //     .then(savedEvent => {
-        //         dispatch({ type: 'setEvents', events: [savedEvent, ...events] })
-        //         console.log(`Event: ${savedEvent.name} has been saved`)
-        //         closeModal()
-        //     })
     }
 
     const handleName = (e) => {
@@ -169,15 +153,15 @@ export default function EventCreateForm({ isAdding, exitAdding }) {
     }
 
     const handleNumberOfPerson = (e) => {
-        setNewEvent({ ...newEvent, numberOfPerson: e.target.value })
+        setNewEvent({ ...newEvent, numberOfPerson: +e.target.value })
     }
 
     const handleDuration = (e) => {
-        setNewEvent({ ...newEvent, duration: e.target.value })
+        setNewEvent({ ...newEvent, duration: +e.target.value })
     }
 
     const handleFees = (e) => {
-        setNewEvent({ ...newEvent, fees: e.target.value })
+        setNewEvent({ ...newEvent, fees: +e.target.value })
     }
 
     const handlePublishDate = (e) => {

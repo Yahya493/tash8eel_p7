@@ -177,15 +177,15 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
     }
 
     const handleNumberOfPerson = (e) => {
-        setEvent({ ...event, numberOfPerson: e.target.value })
+        setEvent({ ...event, numberOfPerson: +e.target.value })
     }
 
     const handleDuration = (e) => {
-        setEvent({ ...event, duration: e.target.value })
+        setEvent({ ...event, duration: +e.target.value })
     }
 
     const handleFees = (e) => {
-        setEvent({ ...event, fees: e.target.value })
+        setEvent({ ...event, fees: +e.target.value })
     }
 
     const handlePublishDate = (e) => {
