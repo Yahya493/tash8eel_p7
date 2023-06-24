@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0)
   const dispatch = useDispatch()
 
   const handleToggleNav = () => {
@@ -29,6 +30,10 @@ const Navbar = () => {
     dispatch({ type: 'setLogIn', logedIn: false })
   };
 
+  const handleChangePage = (index) => {
+    setCurrentPage(index)
+  }
+
   return (
 
     <div className="Navbar">
@@ -40,10 +45,10 @@ const Navbar = () => {
 
 
         <ul className="nav-links">
-          <li><Link to="/events">Events</Link></li>
-          <li><Link to="/buses">Buses</Link></li>
-          <li><Link to="/trails">Trails</Link></li>
-          <li><Link to="/milestones">Milestones</Link></li>
+          <li><Link to="/events" className={currentPage===0?'currentPage':''} onClick={() => handleChangePage(0)}>Events</Link></li>
+          <li><Link to="/buses" className={currentPage===1?'currentPage':''} onClick={() => handleChangePage(1)}>Buses</Link></li>
+          <li><Link to="/trails" className={currentPage===2?'currentPage':''} onClick={() => handleChangePage(2)}>Trails</Link></li>
+          <li><Link to="/milestones" className={currentPage===3?'currentPage':''} onClick={() => handleChangePage(3)}>Milestones</Link></li>
         </ul>
 
         <button type="button" className='logOut' onClick={handleLogOut}>
