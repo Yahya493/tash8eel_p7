@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers/rootReducer';
 import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 
 
 const loggerMiddleware = createLogger({

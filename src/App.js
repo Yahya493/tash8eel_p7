@@ -12,6 +12,7 @@ import LoginForm from './pages/login/Login';
 import NotFoundPage from './pages/notFound/NotFoundPage';
 import TrailPage from './pages/trail/TrailPage';
 import MilestonesPage from './pages/milestone/MilestonesPage';
+import MapPage from './pages/map/MapPage';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path='/buses' element={<BusPage />} />
           <Route path='/trails' element={<TrailPage />} />
           <Route path='/milestones' element={<MilestonesPage />} />
+          <Route path='/maps' element={<MapPage />} />
 
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
