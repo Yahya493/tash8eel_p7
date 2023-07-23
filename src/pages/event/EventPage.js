@@ -21,6 +21,7 @@ export default function EventPage() {
   }
 
   useEffect(() => {
+    dispatch({type: "setCurrentPage", currentPage: 0})
     getEvents(dispatch, user)
     getBuses(dispatch, user)
   }, [])

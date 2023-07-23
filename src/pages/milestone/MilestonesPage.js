@@ -26,6 +26,7 @@ export default function MilestonesPage() {
 
   useEffect(
     () => {
+      dispatch({type: "setCurrentPage", currentPage: 3})
       if(trailId === '') return
       getMilestones(setMilestones, trailId)
       // console.log('selected trail: '+ trailId)

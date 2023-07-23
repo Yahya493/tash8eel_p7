@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(0)
+  // const [currentPage, setCurrentPage] = useState(0)
+  const currentPage = useSelector(state => state.currentPage)
   const dispatch = useDispatch()
 
   const handleToggleNav = () => {
@@ -30,9 +31,10 @@ const Navbar = () => {
     dispatch({ type: 'setLogIn', logedIn: false })
   };
 
-  const handleChangePage = (index) => {
-    setCurrentPage(index)
-  }
+  // const handleChangePage = (index) => {
+  //   // setCurrentPage(index)
+  //   // dispatch({type: "setCurrentPage", currentPage: index})
+  // }
 
   return (
 
@@ -45,10 +47,10 @@ const Navbar = () => {
 
 
         <ul className="nav-links">
-          <li><Link to="/events" className={currentPage===0?'currentPage':''} onClick={() => handleChangePage(0)}>Events</Link></li>
-          <li><Link to="/buses" className={currentPage===1?'currentPage':''} onClick={() => handleChangePage(1)}>Buses</Link></li>
-          <li><Link to="/trails" className={currentPage===2?'currentPage':''} onClick={() => handleChangePage(2)}>Trails</Link></li>
-          <li><Link to="/milestones" className={currentPage===3?'currentPage':''} onClick={() => handleChangePage(3)}>Milestones</Link></li>
+          <li><Link to="/events" className={currentPage===0?'currentPage':''} >Events</Link></li>
+          <li><Link to="/buses" className={currentPage===1?'currentPage':''} >Buses</Link></li>
+          <li><Link to="/trails" className={currentPage===2?'currentPage':''} >Trails</Link></li>
+          <li><Link to="/milestones" className={currentPage===3?'currentPage':''} >Milestones</Link></li>
         </ul>
 
         <button type="button" className='logOut' onClick={handleLogOut}>

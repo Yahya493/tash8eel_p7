@@ -19,6 +19,7 @@ export default function TrailPage() {
 
   useEffect(
     () => {
+      dispatch({type: "setCurrentPage", currentPage: 2})
       getTrails(dispatch, user)
     },
     []

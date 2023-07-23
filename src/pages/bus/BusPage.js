@@ -20,6 +20,7 @@ export default function BusPage() {
   // const [newDriver, setNewDriver] = useState({ name: '', phone: '', user: user })
 
   useEffect(() => {
+    dispatch({type: "setCurrentPage", currentPage: 1})
     if (buses.length === 0) {
       getBuses(dispatch, user)
     }
