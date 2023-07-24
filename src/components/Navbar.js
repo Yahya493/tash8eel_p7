@@ -51,6 +51,7 @@ const Navbar = () => {
           <li><Link to="/buses" className={currentPage===1?'currentPage':''} >Buses</Link></li>
           <li><Link to="/trails" className={currentPage===2?'currentPage':''} >Trails</Link></li>
           <li><Link to="/milestones" className={currentPage===3?'currentPage':''} >Milestones</Link></li>
+          <li><Link to="/maps" className={currentPage===4?'currentPage':''} >Maps</Link></li>
         </ul>
 
         <button type="button" className='logOut' onClick={handleLogOut}>
