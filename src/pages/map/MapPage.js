@@ -43,13 +43,12 @@ export default function MapPage() {
   
   const deleteMarker = (marker) => {
     setMarkerList(preList => {
-      const list = [...preList.filter(m => m!==marker)]
+      const list = preList.filter(m => m!==marker)
       marker.remove()
       console.log(list.length)
       return list
     })
-    console.log(`delete ${marker.getLngLat()}`)
-    
+    // console.log(`delete ${marker.getLngLat()}`)
   }
   
   // const handleDeleteMarker = () => deleteMarker(selectedMarker)
