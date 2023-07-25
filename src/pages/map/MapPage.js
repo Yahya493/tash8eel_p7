@@ -40,17 +40,24 @@ export default function MapPage() {
   const handleMarkerSelection = (marker) => {
     setSelectedMarker(marker)
     console.log(marker.getLngLat())
-    // console.log(`markerCilcked: ${JSON.stringify(e)}`)
+    console.log(`marker type: ${marker.type}`)
   }
-
 
   const deleteMarker = (marker) => {
     setMarkerList(preList => {
       const list = preList.filter(m => m !== marker)
-      marker.remove()
-      if (list.length < 2) {
-        setRouteData(null)
+      if (list.length !== 0) {
+        if (marker.type === 'start') {
+          list[0].type = 'start'
+        }
+        else {
+          if(marker.type === 'end') {
+            list[list.length - 1].type = 'end'
+          }
+        }
       }
+
+      marker.remove()
       console.log(list.length)
       return list
     })
@@ -58,6 +65,19 @@ export default function MapPage() {
   }
 
   // const handleDeleteMarker = () => deleteMarker(selectedMarker)
+
+  useEffect(() => {
+    if (markerList.length < 2) {
+      setRouteData(null)
+    }
+    if (markerList.length >= 2) {
+      // const waypoints = [
+      //   [markerList[0].getLngLat().lng, markerList[0].getLngLat().lat],
+      //   [markerList[1].getLngLat().lng, markerList[1].getLngLat().lat]
+      // ]
+      fetchRoute(markerList)
+    }
+  }, [markerList, selectedMarker])
 
   useEffect(() => {
     if (map.current && routeData) {
@@ -118,18 +138,30 @@ export default function MapPage() {
       document.getElementById('btn-delete').addEventListener('click', () => deleteMarker(marker))
       marker.togglePopup()
 
+      marker.type = 'end'
+      if (markerList.length === 0) {
+        marker.type = 'start'
+      }
+      else {
+        if (markerList.length > 1) {
+          for (let i = 1; i < markerList.length; i++) {
+            markerList[i].type = 'milestone'
+          }
+        }
+      }
+
       setMarkerIndex(preIndex => preIndex + 1)
       setMarkerList(preList => {
         const list = [...preList, marker]
-        console.log(list.length)
+        // console.log(list.length)
 
-        if (list.length == 2) {
-          const waypoints = [
-            [list[0].getLngLat().lng, list[0].getLngLat().lat],
-            [list[1].getLngLat().lng, list[1].getLngLat().lat]
-          ]
-          fetchRoute(waypoints)
-        }
+        // if (list.length == 2) {
+        //   const waypoints = [
+        //     [list[0].getLngLat().lng, list[0].getLngLat().lat],
+        //     [list[1].getLngLat().lng, list[1].getLngLat().lat]
+        //   ]
+        //   fetchRoute(waypoints)
+        // }
 
         return list
       })
@@ -156,10 +188,9 @@ export default function MapPage() {
     map.current.on('click', handleClick)
   }, []);
 
-
-  async function fetchRoute(waypoints) {
+  async function fetch2MarkerRoute(waypoints) {
     try {
-      const url = `https://api.mapbox.com/directions/v5/mapbox/driving/35.847295,34.445552;35.84455,34.415482?alternatives=false&geometries=geojson&overview=full&steps=false&access_token=${getMapboxToken()}`
+      // const url = `https://api.mapbox.com/directions/v5/mapbox/driving/35.847295,34.445552;35.84455,34.415482?alternatives=false&geometries=geojson&overview=full&steps=false&access_token=${getMapboxToken()}`
 
       const response = await fetch(
         `https://api.mapbox.com/directions/v5/mapbox/walking/${waypoints.join(';')}?alternatives=false&continue_straight=false&geometries=geojson&overview=full&steps=false&access_token=${getMapboxToken()}`,
@@ -178,19 +209,48 @@ export default function MapPage() {
       }
 
       const data = await response.json();
-      setRouteData(predata => {
-        console.log(`distance: ${data.routes[0].distance} m`)
-        console.log(`duration: ${data.routes[0].duration} s`)
-        console.log(data.routes[0].geometry.coordinates.length)
+      // setRouteData(predata => {
+      //   console.log(`distance: ${data.routes[0].distance} m`)
+      //   console.log(`duration: ${data.routes[0].duration} s`)
+      //   console.log(data.routes[0].geometry.coordinates.length)
 
-        return data
-      });
+      //   return data
+      // });
+      return data;
     } catch (error) {
       console.error('Error:', error);
     }
   }
 
+  async function fetchRoute(waypoints) {
+    setRouteData(preData => null)
 
+    for (let i = 0; i < waypoints.length - 1; i++) {
+      const points = [
+        [markerList[i].getLngLat().lng, markerList[i].getLngLat().lat],
+        [markerList[i + 1].getLngLat().lng, markerList[i + 1].getLngLat().lat]
+      ]
+      const data = await fetch2MarkerRoute(points)
+      setRouteData(preData => {
+        let newData = data
+        if (preData) {
+          newData = {
+            routes: [{
+              distance: preData.routes[0].distance + data.routes[0].distance,
+              duration: preData.routes[0].duration + data.routes[0].duration,
+              geometry: {
+                coordinates: [...preData.routes[0].geometry.coordinates, ...data.routes[0].geometry.coordinates],
+              },
+            }],
+          }
+        }
+        console.log(`distance: ${newData.routes[0].distance} m`)
+        console.log(`duration: ${newData.routes[0].duration} s`)
+        console.log(newData.routes[0].geometry.coordinates.length)
+        return newData
+      })
+    }
+  }
 
   return (
     <div>
