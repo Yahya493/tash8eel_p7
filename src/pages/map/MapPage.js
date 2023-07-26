@@ -23,10 +23,13 @@ export default function MapPage() {
   const [markerIndex, setMarkerIndex] = useState(() => 0)
   const dispatch = useDispatch()
   const [routeData, setRouteData] = useState(null);
+  const [refresh, setRefresh] = useState(() => 0)
+  const [isLoop, setIsLoop] = useState(() => false)
 
   // const mapRef = useRef < HTMLDivElement > (null);
 
   const handleClick = (e) => {
+    // setSelectedMarker(null)
     // setLng(e.lngLat.lng.toFixed(4))
     // setLat(e.lngLat.lat.toFixed(4))
     setLocation(preLocation => [e.lngLat.lng.toFixed(4), e.lngLat.lat.toFixed(4)])
@@ -34,13 +37,14 @@ export default function MapPage() {
   }
 
   const handleMarkerMove = (e) => {
+    setRefresh(preNb => preNb + 1)
     // console.log(`markerDragged: ${e}`)
   }
 
   const handleMarkerSelection = (marker) => {
     setSelectedMarker(marker)
-    console.log(marker.getLngLat())
-    console.log(`marker type: ${marker.type}`)
+    // console.log(marker.getLngLat())
+    // console.log(`marker type: ${marker.type}`)
   }
 
   const deleteMarker = (marker) => {
@@ -51,19 +55,26 @@ export default function MapPage() {
           list[0].type = 'start'
         }
         else {
-          if(marker.type === 'end') {
+          if (marker.type === 'end') {
             list[list.length - 1].type = 'end'
           }
         }
       }
 
       marker.remove()
-      console.log(list.length)
+      // console.log(list.length)
       return list
     })
     // console.log(`delete ${marker.getLngLat()}`)
   }
 
+  const changeDirectionType = (marker) => {
+    marker.isDirect = !marker.isDirect
+    // setSelectedMarker(preMarker => {
+    //   return {}
+    // })
+    setRefresh(preNb => { return preNb + 1 })
+  }
   // const handleDeleteMarker = () => deleteMarker(selectedMarker)
 
   useEffect(() => {
@@ -77,7 +88,7 @@ export default function MapPage() {
       // ]
       fetchRoute(markerList)
     }
-  }, [markerList, selectedMarker])
+  }, [markerList, refresh]) //selectedMarker
 
   useEffect(() => {
     if (map.current && routeData) {
@@ -128,24 +139,28 @@ export default function MapPage() {
       const marker = new mapboxgl.Marker(markerOptions)
         .setLngLat(location) // [longitude, latitude] of the marker's position
 
-      marker.setPopup(new mapboxgl.Popup().setHTML(`<button id="btn-delete">x</button><span>Marker-${markerIndex}</span>`))
+      marker.setPopup(new mapboxgl.Popup().setHTML(`<button id="btn-delete">x</button><label for="chb-direction">Marker-${markerIndex}</label><input type="checkbox" id="chb-direction" ${marker.isDirect ? "checked" : ""}/>`))
         .addTo(map.current)
-        .on('drag', handleMarkerMove)
+        .on('dragend', handleMarkerMove)
 
       marker.getElement().addEventListener('click', () => handleMarkerSelection(marker))
       // setSelectedMarker(marker)
       marker.togglePopup()
       document.getElementById('btn-delete').addEventListener('click', () => deleteMarker(marker))
+      document.getElementById('chb-direction').addEventListener('change', () => changeDirectionType(marker))
       marker.togglePopup()
 
+      marker.isDirect = true
       marker.type = 'end'
       if (markerList.length === 0) {
         marker.type = 'start'
+        // marker.setOptions('green')
       }
       else {
         if (markerList.length > 1) {
           for (let i = 1; i < markerList.length; i++) {
             markerList[i].type = 'milestone'
+            // markerList[i].setColor('gray')
           }
         }
       }
@@ -165,6 +180,7 @@ export default function MapPage() {
 
         return list
       })
+
 
       // marker.addTo(map.current)
     }
@@ -225,14 +241,44 @@ export default function MapPage() {
   async function fetchRoute(waypoints) {
     setRouteData(preData => null)
 
-    for (let i = 0; i < waypoints.length - 1; i++) {
+    let lastIndex = waypoints.length - 1
+    if (isLoop) lastIndex = waypoints.length
+
+    for (let i = 0; i < lastIndex; i++) {
+      const y = i !== waypoints.length - 1 ? i + 1 : 0
       const points = [
         [markerList[i].getLngLat().lng, markerList[i].getLngLat().lat],
-        [markerList[i + 1].getLngLat().lng, markerList[i + 1].getLngLat().lat]
+        [markerList[y].getLngLat().lng, markerList[y].getLngLat().lat]
       ]
-      const data = await fetch2MarkerRoute(points)
+      let data = {}
+      if (markerList[y].isDirect) {
+        const d = getDistance(points[0], points[1])
+        data = {
+          routes: [{
+            distance: d,
+            duration: d / 1.4,
+            geometry: {
+              coordinates: points,
+            },
+          }],
+        }
+      }
+      else {
+        data = await fetch2MarkerRoute(points)
+      }
       setRouteData(preData => {
         let newData = data
+        // if (data.routes[0].geometry.coordinates[data.routes[0].geometry.coordinates.length - 1] === data.routes[0].geometry.coordinates[0]) {
+        //   // newData = [points[0], ...data.routes[0].geometry.coordinates.filter(p => p !== points[0])]
+        //   newData = {
+        //     routes: [{
+        //       ...newData.routes[0],
+        //       geometry: {
+        //         coordinates: [data.routes[0].geometry.coordinates[0], ...data.routes[0].geometry.coordinates.filter(p => p !== data.routes[0].geometry.coordinates[0])],
+        //       },
+        //     }],
+        //   }
+        // }
         if (preData) {
           newData = {
             routes: [{
@@ -244,9 +290,9 @@ export default function MapPage() {
             }],
           }
         }
-        console.log(`distance: ${newData.routes[0].distance} m`)
-        console.log(`duration: ${newData.routes[0].duration} s`)
-        console.log(newData.routes[0].geometry.coordinates.length)
+        console.log(`distance: ${newData.routes[0].distance.toFixed(2)} m`)
+        console.log(`duration: ${(newData.routes[0].duration / 60).toFixed(2)} minutes`)
+        // console.log(newData.routes[0].geometry.coordinates.length)
         return newData
       })
     }
@@ -257,4 +303,34 @@ export default function MapPage() {
       <div ref={mapContainer} className="map-container" />
     </div>
   );
+}
+
+const getDistance = (p1, p2) => {
+  const lon1 = p1[0]
+  const lat1 = p1[1]
+  const lon2 = p2[0]
+  const lat2 = p2[1]
+  const R = 6371000.0; // Earth's radius in kilometers
+
+  // Convert latitude and longitude from degrees to radians
+  const lat1Rad = toRadians(lat1);
+  const lon1Rad = toRadians(lon1);
+  const lat2Rad = toRadians(lat2);
+  const lon2Rad = toRadians(lon2);
+
+  // Compute the differences in latitude and longitude
+  const deltaLat = lat2Rad - lat1Rad;
+  const deltaLon = lon2Rad - lon1Rad;
+
+  // Haversine formula
+  const a = Math.sin(deltaLat / 2) ** 2 + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  // Calculate the distance
+  const distance = R * c;
+  return distance;
+}
+
+const toRadians = (degrees) => {
+  return degrees * (Math.PI / 180)
 }
