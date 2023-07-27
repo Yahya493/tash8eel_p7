@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react'
-// import { MapView } from './MapView';
 import { getMapboxToken } from '../../actions/urlService';
 // import { Map } from 'mapbox-gl';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
@@ -202,6 +201,7 @@ export default function MapPage() {
     });
     map.current.addControl(new mapboxgl.NavigationControl())
     map.current.on('click', handleClick)
+    map.current.setStyle('mapbox://styles/mapbox/satellite-v9');
   }, []);
 
   async function fetch2MarkerRoute(waypoints) {
@@ -298,9 +298,23 @@ export default function MapPage() {
     }
   }
 
+  const switchToSatelliteLayer = () => {
+    if (map.current) {
+      map.current.setStyle('mapbox://styles/mapbox/satellite-v9');
+    }
+  };
+
+  const switchToStreetsLayer = () => {
+    if (map.current) {
+      map.current.setStyle('mapbox://styles/mapbox/streets-v12');
+    }
+  };
+
   return (
     <div>
       <div ref={mapContainer} className="map-container" />
+      <button onClick={switchToSatelliteLayer}>Switch to Satellite Layer</button>
+      <button onClick={switchToStreetsLayer}>Switch to Streets Layer</button>
     </div>
   );
 }
