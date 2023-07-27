@@ -1,3 +1,17 @@
 .map-container {
     height: 92vh;
 }
+
+#layer-switcher {
+    position: absolute;
+    left: 10px;
+    top: calc(7vh + 3*2px + 8px);
+}
+
+#layer-switcher button{
+    border-radius: 5px;
+    background-color: white;
+    color: #333333;
+    border: 2px solid lightgray;
+}
+
