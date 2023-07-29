@@ -7,7 +7,8 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import BusPage from './pages/bus/BusPage';
-import EventPage from './pages/event/EventPage';
+// import EventPage from './pages/event/EventPage';
+import EventPage from './pages/new_event/EventPage';
 import LoginForm from './pages/login/Login';
 import NotFoundPage from './pages/notFound/NotFoundPage';
 import TrailPage from './pages/trail/TrailPage';
@@ -38,6 +39,7 @@ function App() {
       <div id='content'>
         <Routes>
           <Route path='/' element={<EventPage />} />
+          {/* <Route path='/events' element={<EventPage />} /> */}
           <Route path='/events' element={<EventPage />} />
           <Route path='/buses' element={<BusPage />} />
           <Route path='/trails' element={<TrailPage />} />
