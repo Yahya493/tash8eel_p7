@@ -8,7 +8,7 @@ import loadingPhoto from '../../../components/ben-redblock-loading.gif'
 
 export default function EventCard({ event, handleClick }) {
 
-    const [coverPhoto, setcoverPhoto] = useState(() => { return {data: '', state: 0} })
+    const [coverPhoto, setcoverPhoto] = useState(() => { return { data: '', state: 0 } })
 
     useEffect(
         () => {
@@ -20,7 +20,7 @@ export default function EventCard({ event, handleClick }) {
     return (
         <div className='eventCard' onClick={() => handleClick(event)}>
             <div className='coverPhoto'>
-                <img src={coverPhoto.state === 0?emptyPhoto:(coverPhoto.state === 1?loadingPhoto:coverPhoto.data)} alt="cover photo" />
+                <img src={coverPhoto.state === 0 ? emptyPhoto : (coverPhoto.state === 1 ? loadingPhoto : coverPhoto.data)} alt="cover photo" />
             </div>
             <div className='body'>
                 <div className='title'>{event.name}</div>

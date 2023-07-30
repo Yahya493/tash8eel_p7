@@ -1,11 +1,15 @@
 import { getBaseUrl } from "../../../actions/urlService"
+import { dbAddPhoto, dbGetPhoto } from "../../../actions/indexedDB"
 
 const getCoverPhoto = async (photoId, setPhoto) => {
     const api = getBaseUrl()
-    const photo = await sessionStorage.getItem(photoId)
+    // const photo = await sessionStorage.getItem(photoId)
+    const photo = await dbGetPhoto(photoId)
+    // console.log(photo)
+    // return
     if(photo) {
         setPhoto({
-            data: photo,
+            data: photo.myFile,
             state: 2,
         })
         return
@@ -24,7 +28,8 @@ const getCoverPhoto = async (photoId, setPhoto) => {
     })
         .then(res => res.json())
         .then(photo => {
-            sessionStorage.setItem(photo._id, photo.myFile)
+            // sessionStorage.setItem(photo._id, photo.myFile)
+            dbAddPhoto(photo)
             setPhoto({
                 data: photo.myFile,
                 state: 2,
@@ -51,6 +56,7 @@ const formatTime = (time) => {
     }
     return `${data[0]}:${data[1]} AM`
 }
+
 
 
 export {
