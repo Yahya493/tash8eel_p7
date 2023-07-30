@@ -1,4 +1,11 @@
+#eventPageBody {
+    padding-block: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #eventPageBody .cardContainer {
     padding: 7px;
+    width: calc(50vw - 24px);
 }
 

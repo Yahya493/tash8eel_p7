@@ -477,8 +477,13 @@ const saveMilestone = (milestone, milestones, setMilestones, closeModal) => {
         })
 }
 
-const getPhotoById = (photoId, photos, setPhotos) => {
+const getPhotoById = async (photoId, photos, setPhotos) => {
     if(photos.find(p => p._id === photoId && p.downloadState !== 0 )) return
+    const photo = await sessionStorage.getItem(photoId)
+    if(photo) {
+        setPhotos(p => p.map(p1 => p1._id === photoId?{...p1, myFile: photo, downloadState: 2}:p1))
+        return
+    }
     setPhotos(p => p.map(p1 => p1._id === photoId?{...p1, downloadState: 1}:p1))
     const api = getBaseUrl()
     console.log(`downloading: ${photoId}`)
@@ -492,6 +497,7 @@ const getPhotoById = (photoId, photos, setPhotos) => {
         .then(res => res.json())
         .then(photo => {
             // setPhotos(p => [...p.filter(p1 => p1._id !== photoId), photo])
+            sessionStorage.setItem(photoId, photo.myFile)
             setPhotos(p => p.map(p1 => p1._id === photoId?{...photo, downloadState: 2}:p1))
             console.log(`download finished: ${photoId}`)
         }).catch(error => console.error(error))

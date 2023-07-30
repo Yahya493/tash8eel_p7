@@ -1,12 +1,13 @@
 .eventCard {
     display: flex;
     flex-direction: row;
-    height: 200px;
+    height: 210px;
     border-radius: 10px;
     background-color:var(--primary_color);
     
+    font-weight: bold;
     overflow: hidden;
-    box-shadow: 0 0 3px 3px gray;
+    box-shadow: 0 0 3px 3px var(--gray_color);
 }
 
 .eventCard:hover {
@@ -15,34 +16,42 @@
 }
 
 
-.eventCard h2 {
+.eventCard .title {
     font-size: large;
-    font-weight: bold;
+    padding-block: 10px;
+    border-bottom: 1px solid var(--gray_color);
 }
 
 
 .eventCard .coverPhoto {
     flex: 1;
+    background-color: black;
+    text-align: center;
 }
 
 .eventCard .coverPhoto img{
     width: 100%;
-    min-height: 100%;
+    /* max-width: 100%; */
+    height: 100%;
     /* display: block; */
 }
 
 .eventCard .body {
-    flex: 2;
-    padding: 5px;
+    flex: 3;
+    padding: 5px 10px;
 }
 
 .eventCard label {
-    font-weight: bold;
     color: var(--secondery_color);
 }
 
-.eventCard .dates {
+.eventCard span {
+    color: var(--gray_color);
+}
+
+.eventCard .row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 10px;
 }

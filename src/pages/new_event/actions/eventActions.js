@@ -10,6 +10,10 @@ const getCoverPhoto = async (photoId, setPhoto) => {
         })
         return
     }
+    setPhoto({
+        data: '',
+        state: 1,
+    })
     console.log(`downloading: ${photoId}`)
     fetch(api + '/photos', {
         method: 'POST',
@@ -47,6 +51,7 @@ const formatTime = (time) => {
     }
     return `${data[0]}:${data[1]} AM`
 }
+
 
 export {
     getCoverPhoto,
