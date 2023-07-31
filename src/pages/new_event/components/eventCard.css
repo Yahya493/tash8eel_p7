@@ -15,7 +15,9 @@
     /* background-color:lightgray; */
     position: relative;
     /* left: 1px; */
-    bottom: 1px;
+    /* bottom: 1px; */
+    scale: 1.005;
+    transition: box-shadow 0.1s;
     box-shadow: 0 0 5px 5px var(--secondery_color);
 }
 
@@ -42,10 +44,9 @@
 }
 
 .eventCard .coverPhoto img{
+    object-fit:cover;
     width: 100%;
-    /* max-width: 100%; */
     height: 100%;
-    /* display: block; */
 }
 
 .eventCard .content {

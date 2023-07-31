@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import FilesUpload from '../../../components/FilesUpload'
-import ReactImageGallery from 'react-image-gallery'
-import { useState } from 'react'
-import emptyPhoto from '../../../components/empty-photo.jpg'
-import { getBaseUrl } from '../../../actions/urlService'
-import Cookies from 'js-cookie'
-import { getPhotoById, getTrails } from '../../../actions/actions'
 import { wait } from '@testing-library/user-event/dist/utils'
-import { waitFor } from '@testing-library/react'
+import Cookies from 'js-cookie'
+import React, { useEffect, useState } from 'react'
+import ReactImageGallery from 'react-image-gallery'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPhotoById, getTrails } from '../../../actions/actions'
+import emptyPhoto from '../../../components/empty-photo.jpg'
+import FilesUpload from '../../../components/FilesUpload'
 
 
 

@@ -29,42 +29,10 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
 
     useEffect(() => {
         getEventById(id, setEvent)
-        // const api = getBaseUrl()
-        // fetch(api + "/events", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({_id: id})
-        // })
-        //     .then(res => res.json())
-        //     .then(event => {
-        //         setEvent({
-        //             ...event,
-        //             validFrom: event.validFrom.substring(0, 10),
-        //             validTo: event.validTo.substring(0, 10),
-        //             departureTime: event.departureTime.substring(11, 16),
-        //             arrivalTime: event.arrivalTime.substring(11, 16),
-        //             publishDate: event.publishDate.substring(0, 10),
-        //         })
-        //     })
-    }, [])
+    }, [id])
 
     const handleDelete = () => {
         deleteEvent(dispatch, event, events, closeModal)
-        // const api = getBaseUrl()
-        // fetch(api + `/deleteEvent/${event._id}`, {
-        //     method: 'DELETE',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        //     .then(res => res.json())
-        //     .then(deletedEvent => {
-        //         dispatch({ type: 'setEvents', events: events.filter(events => events._id !== deletedEvent._id) })
-        //         console.log(`${deletedEvent.data.name}: ${deletedEvent.status}`)
-        //         closeModal()
-        //     })
     }
 
     const chechForm = () => {
@@ -131,21 +99,6 @@ export default function EventDetails({ id, isEditing, exitEditing }) {
         if (!chechForm()) return
 
         updateEvent(dispatch, eventDataToUpload(), events, closeModal)
-        // const api = getBaseUrl()
-        // fetch(api + `/updateEvent`,
-        //     {
-        //         method: 'PATCH',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(eventDataToUpload())
-        //     })
-        //     .then(res => res.json())
-        //     .then(updatedEvent => {
-        // dispatch({ type: 'setEvents', events: [updatedEvent, ...events.filter(events => events._id !== updatedEvent._id)] })
-        //         console.log(`Event: ${updatedEvent.name} has been updated`)
-        //         closeModal()
-        //     })
     }
 
     const handleName = (e) => {

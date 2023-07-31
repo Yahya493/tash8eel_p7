@@ -48,7 +48,7 @@ button[class='btnCancel'] {
     height: 5vh;
     padding: 5px 10px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     background-color: var(--primary_color);
     border-bottom: 3px solid grey;
