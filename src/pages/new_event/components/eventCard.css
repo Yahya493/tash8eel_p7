@@ -42,12 +42,14 @@
         background-color: black;
         text-align: center;
         border-right: 1px solid var(--gray_color);
+        transition: flex 0.5s;
     }
 }
 
 @media (max-width: 650px) {
     .eventCard .coverPhoto {
-        display: none;
+        flex: 0;
+        transition: flex 0.5s;
     }
 }
 
@@ -76,6 +78,21 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
+}
+
+@media (max-width: 520px) {
+
+    .eventCard .body {
+        height: fit-content;
+    }
+
+    .eventCard {
+        height: fit-content;
+    }
+
+    .eventCard .row {
+        flex-direction: column;
+    }
 }
 
 /* .eventCard .separator {
