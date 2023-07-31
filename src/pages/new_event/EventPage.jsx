@@ -11,7 +11,6 @@ import EventCreateForm from './EventCreateForm'
 export default function EventPage() {
 
   const events = useSelector(state => state.events)
-  const user = Cookies.get('user')
   const dispatch = useDispatch()
   const [isAdding, setIsAdding] = useState(false)
   const [query, setQuery] = useState('')
@@ -21,10 +20,11 @@ export default function EventPage() {
   }
 
   useEffect(() => {
-    dispatch({type: "setCurrentPage", currentPage: 0})
+    const user = Cookies.get('user')
+    dispatch({ type: "setCurrentPage", currentPage: 0 })
     getEvents(dispatch, user)
     getBuses(dispatch, user)
-  }, [])
+  }, [dispatch])
 
   const exitAdding = () => {
     setIsAdding(false)

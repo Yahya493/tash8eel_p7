@@ -36,12 +36,21 @@
     color: var(--gray_color)
 }
 
-.eventCard .coverPhoto {
-    flex: 1;
-    background-color: black;
-    text-align: center;
-    border-right: 1px solid var(--gray_color);
+@media (min-width: 650px) {
+    .eventCard .coverPhoto {
+        flex: 1;
+        background-color: black;
+        text-align: center;
+        border-right: 1px solid var(--gray_color);
+    }
 }
+
+@media (max-width: 650px) {
+    .eventCard .coverPhoto {
+        display: none;
+    }
+}
+
 
 .eventCard .coverPhoto img{
     object-fit:cover;
