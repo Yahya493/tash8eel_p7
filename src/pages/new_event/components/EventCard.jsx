@@ -22,21 +22,28 @@ export default function EventCard({ event, handleClick }) {
             <div className='coverPhoto'>
                 <img src={coverPhoto.state === 0 ? emptyPhoto : (coverPhoto.state === 1 ? loadingPhoto : coverPhoto.data)} alt="cover photo" />
             </div>
-            <div className='body'>
-                <div className='title'>{event.name}</div>
-                <div className="infos">
+            <div className='content'>
+                <div className='header'>
+                    <div className='title'>{event.name}</div>
+                </div>
+                <div className="body">
                     <div className='row'>
                         <div><label>Valid From: </label><span>{formatDate(event.validFrom)}</span></div>
+                        {/* <div className='separator'/> */}
                         <div><label>Valid To: </label><span>{formatDate(event.validTo)}</span></div>
+                        {/* <div className='separator'/> */}
                         <div><label>Publish Date: </label><span>{formatDate(event.publishDate)}</span></div>
                     </div>
                     <div className='row'>
                         <div><label>Number: </label><span>{event.numberOfPerson} Persons</span></div>
+                        {/* <div className='separator'/> */}
                         <div><label>Fees: </label><span>{event.fees} $</span></div>
+                        {/* <div className='separator'/> */}
                         <div><label>Duration: </label><span>{event.duration} Hours</span></div>
                     </div>
                     <div className='row'>
                         <div><label>Departure Time: </label><span>{formatTime(event.departureTime)}</span></div>
+                        {/* <div className='separator'/> */}
                         <div><label>Arrival Time: </label><span>{formatTime(event.arrivalTime)}</span></div>
                     </div>
                     <div className='row'>

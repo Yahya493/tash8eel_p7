@@ -26,7 +26,7 @@ export default function EventPageBody({ events }) {
 
   const handleCardClick = (e) => {
     // console.log(e)
-    console.log(e._id)
+    // console.log(e._id)
 
     setEventId(e._id)
     setIsEditing(true)

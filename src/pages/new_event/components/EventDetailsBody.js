@@ -215,7 +215,8 @@ export default function EventDetailsBody(
                                         break
                                     case 0:
                                     default:
-                                        image = emptyPhoto
+                                        // image = emptyPhoto
+                                        image = require('../../../components/ben-redblock-loading.gif')
                                         break
                                 }
                                 return {
