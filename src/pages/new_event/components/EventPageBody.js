@@ -5,6 +5,7 @@ import { useState } from 'react';
 import EventDetails from '../EventDetails'
 import EventCard from './EventCard';
 import './eventPageBody.css'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
 
 
 export default function EventPageBody({ events }) {
@@ -36,9 +37,26 @@ export default function EventPageBody({ events }) {
     <div id='eventPageBody' className="">
       {isEditing ? <EventDetails id={eventId} isEditing={isEditing} exitEditing={setIsEditing} /> : null}
 
-      {events.map(e => <div key={e._id} className="cardContainer">
+      {/* {events.map(e => <div key={e._id} className="cardContainer">
         <EventCard event={e} handleClick={handleCardClick}/>
-      </div>)}
+      </div>)} */}
+
+      <ScrollArea.Root className="ScrollAreaRoot">
+        <ScrollArea.Viewport className="ScrollAreaViewport">
+          <div style={{ padding: '5px 25px 5px 10px' }}>
+            {events.map(e => <div key={e._id} className="cardContainer">
+              <EventCard event={e} handleClick={handleCardClick} />
+            </div>)}
+          </div>
+        </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="vertical">
+          <ScrollArea.Thumb className="ScrollAreaThumb" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Scrollbar className="ScrollAreaScrollbar" orientation="horizontal">
+          <ScrollArea.Thumb className="ScrollAreaThumb" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Corner className="ScrollAreaCorner" />
+      </ScrollArea.Root>
     </div>
   )
 }

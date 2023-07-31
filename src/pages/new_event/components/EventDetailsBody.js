@@ -7,6 +7,8 @@ import emptyPhoto from '../../../components/empty-photo.jpg'
 import { getBaseUrl } from '../../../actions/urlService'
 import Cookies from 'js-cookie'
 import { getPhotoById, getTrails } from '../../../actions/actions'
+import { wait } from '@testing-library/user-event/dist/utils'
+import { waitFor } from '@testing-library/react'
 
 
 
@@ -64,16 +66,18 @@ export default function EventDetailsBody(
 
     useEffect(
         () => {
-            setPhotos(event.photos.map(p => {
+            setPhotos(pre => event.photos.map(p => {
                 return {
                     _id: p,
                     downloadState: 0,
                     myFile: ''
                 }
             }))
-            if (event.photos.length > 0) {
-                getPhotoById(event.photos[0], photos, setPhotos)
-            }
+            wait(500).then(() => {
+                if (event.photos.length > 0) {
+                    getPhotoById(event.photos[0], photos, setPhotos)
+                }
+            })
         },
         [event.photos]
     )
